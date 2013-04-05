@@ -1,0 +1,209 @@
+\section{Convergence of Markov Chain}
+
+\begin{definition}
+If $ \pi_{j} = \lim_{n \to \infty} \mathbb{P}^{n} [i, j] $ holds for all states $ i \in \mathcal{S} $, then $ \pi_{j} $ is the \defterm{limiting probability} of state $ j $.
+
+\begin{comment}
+If all states $ i $ have limiting probability, then
+\[ \lim_{n \to \infty} \mathbb{P}^{n} [i, j] =
+\begin{bmatrix}
+  \boldsymbol\pi \\ \vdots \\ \boldsymbol\pi
+\end{bmatrix}, \]
+where $ \boldsymbol\pi $ is the row vector $ (\pi_{1}, \pi_{2}, \cdots) $.
+\end{comment}
+\end{definition}
+
+\begin{definition}
+Non-negative row vector $ \boldsymbol\pi = (\pi_{1}, \pi_{2}, \cdots) $ with $ \sum_{i \in \mathcal{S}} \pi_{i} = 1 $ is called a \defterm{stationary distribution} or \defterm{steady-state distribution} of $ \mathbb{X} $ if $ \boldsymbol\pi \mathbb{P} = \boldsymbol\pi $ (normalized left eignvector with eignvalue $ 1 $).
+
+\begin{comment}
+Why ``steady-state''?
+
+If $ P(X(0) = i) = \pi_{i} $ for all $ i \in \mathcal{S} $, then
+\begin{eqnarray*}
+P(X(1) = i)
+  & = & \sum_{i \in \mathcal{S}} P(X(1) = j \mid X(0) = i) \cdot P(X(0) = i) \\
+  & = & \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j] \\
+  & = & \pi_{j},
+\end{eqnarray*}
+for all $ j \in \mathcal{S} $
+\end{comment}
+\end{definition}
+
+\begin{definition}
+$ \mu_{i} = \sum_{n \ge 1} n \cdot f_{i}^{(n)} $ is the \defterm{excepted return time} of state $ i $, where 
+\[ f_{i}^{(n)} = P \left( n = \argmin_{m \ge 1} ( X(m) = i ) \;\middle|\; X(0) = i \right). \]
+
+\begin{itemize}
+  \item state $ i $ is \defterm{positive recurrent} if $ \mu_{i} < \infty $,
+  \item state $ i $ is \defterm{null recurrent} if $ \mu_{i} = \infty $,
+  \item $ \mathbb{X} $ is \defterm*{positive recurrent} if all states of $ \mathbb{X} $ are positive recurrent,
+  \item $ \mathbb{X} $ is \defterm*{null recurrent} if all states of $ \mathbb{X} $ are null recurrent.
+\end{itemize}
+
+\begin{comment}
+\[ f_{i} = \sum_{n = 0}^{\infty} f_{i}^{(n)} = \text{recurrent probability of state $ i $}. \]
+\end{comment}
+\end{definition}
+
+\begin{exercise}
+Proof that $ i \leftrightarrow j \wedge i \text{ is positive recurrent } \Rightarrow j \text{ is positive recurrent}. $
+\end{exercise}
+
+\begin{definition}
+The \defterm{period} of state $ i $ is the greatest common divisor (gcd) of all numbers $ n \ge 1 $ with $ \mathbb{P}[i, i] > 0 $.
+
+\begin{itemize}
+  \item state $ i $ is \defterm{aperiodic} if the period of $ i $ is $ 1 $,
+  \item $ \mathbb{X} $ is \defterm*{aperiodic} if all states of $ \mathbb{X} $ are aperiodic.
+\end{itemize}
+\end{definition}
+
+\begin{lemma} \label{lem:lim-p_nij-exists}
+If state $ j $ is aperiodic and positive recurrent, then $ \lim_{n \to \infty} \mathbb{P}^{n}[i, j] $ exists, is positive and is independent of $ i $ for all states $ i $ with $ i \leftrightarrow j $ (唯一不證的 lemma).
+
+\begin{comment}
+In general, if $ d $ is the period of $ j $, then
+\[ \lim_{t \to \infty} \mathbb{P}^{td}[i, j] = \frac{d}{\mu_{i}} \]
+\end{comment}
+\end{lemma}
+
+\begin{inequality} \label{ineq:sum-pi-le-1}
+If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $, then $ \sum_{i \in \mathcal{S}} \pi_{i} \le 1 $.
+
+\begin{proof}
+\begin{eqnarray*}
+\sum_{j = 1}^{m} \pi_{j}
+  & = & \sum_{j = 1}^{m} \lim_{n \to \infty} \mathbb{P}^{n}[i, j] \\
+  & = & \lim_{n \to \infty} \sum_{j = 1}^{m} \mathbb{P}^{n}[i, j] \\
+  & \le & \lim_{n \to \infty} \sum_{j = 1}^{\infty} \mathbb{P}^{n}[i, j] \\
+  & = & 1,
+\end{eqnarray*}
+and hence
+\[ \sum_{i \in \mathcal{S}} \pi_{i} = \lim_{m \to \infty} \sum_{j = 1}^{m} \pi_{j} \le 1. \]
+\end{proof}
+\end{inequality}
+
+\begin{inequality} \label{ineq:pi-ge-pi-times-p}
+If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $, then $ \pi_{i} \ge \sum_{i \in \mathcal{S}} \pi_{i} \mathbb{P}[i, j] $ holds for all state $ j \in \mathcal{S} $.
+
+\begin{proof}
+For all $ m, n \ge 1 $,
+\begin{alignat*}{4}
+  & \mathbb{P}^{n + 1}[i, j]
+    & \quad=\quad & \sum_{k \in \mathcal{S}} \mathbb{P}^{n}[i, k] \cdot \mathbb{P}[k, j] \\
+  & & \quad\ge\quad & \sum_{k = 0}^{m} \mathbb{P}^{n}[i, k] \cdot \mathbb{P}[k, j]. \\
+\Rightarrow\quad
+  & \pi_{j}
+    & \quad=\quad & \lim_{n \to \infty} \mathbb{P}^{n + 1}[i, j] \\
+  & & \quad\ge\quad & \lim_{n \to \infty} \sum_{k = 0}^{m} \mathbb{P}^{n}[i, k] \cdot \mathbb{P}[k, j]. \\
+  & & \quad=\quad & \sum_{k = 0}^{m} \pi_{k} \cdot \mathbb{P}[k, j]. \\
+\Rightarrow\quad
+  & \underbrace{\lim_{m \to \infty} \pi_{j}}_{= \pi_{j}}
+    & \quad\ge\quad & \lim_{m \to \infty} \sum_{k = 0}^{m} \pi_{k} \cdot \mathbb{P}[k, j]. \\
+\end{alignat*}
+\end{proof}
+\end{inequality}
+
+\begin{equality} \label{eq:pi-eq-pi-times-p}
+If the limiting probability $ \pi_{j} $ exists for all $ j \in \mathcal{S} $, then $ \boldsymbol\pi = \boldsymbol\pi \mathbb{P} $.
+
+\begin{proof}
+Assume that $ \boldsymbol\pi \neq \boldsymbol\pi \mathbb{P} $,
+\begin{eqnarray*}
+\sum_{j \in \mathcal{S}} \pi_{j}
+  & > & \sum_{j \in \mathcal{S}} \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j]
+    \text{\hspace{1em} \small(by \autoref{ineq:pi-ge-pi-times-p})} \\
+  & = & \sum_{i \in \mathcal{S}} \pi_{i} \underbrace{\sum_{j \in \mathcal{S}} \mathbb{P}[i, j]}_{= 1} \\
+  & = & \sum_{i \in \mathcal{S}} \pi_{i},
+\end{eqnarray*}
+contradiction.
+\end{proof}
+\end{equality}
+
+\begin{inequality} \label{ineq:p-ge-pi}
+If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $ and $ p $ is a stationary distribution of $ \mathbb{X} $, then $ p_{i} \ge \pi_{i} $ holds for all $ i \in \mathcal{S} $.
+
+\begin{proof}
+Assume that $ p $ is the distribution of $ X(0) $,
+\begin{alignat*}{4}
+  & p_{j}
+    & \quad=\quad & P(X(n) = j) \\
+  & & \quad=\quad & \sum_{i \in \mathcal{S}} \mathbb{P}^{n}[i, j] \cdot p_{i} \\
+  & & \quad\ge\quad & \sum_{i = 1}^{m} \mathbb{P}^{n}[i, j] \cdot p_{i}. \\
+\Rightarrow\quad
+  & \lim_{n \to \infty} p_{j}
+    & \quad\ge\quad & \lim_{n \to \infty} \sum_{i = 1}^{m} \mathbb{P}^{n}[i, j] \cdot p_{i} \\
+  & & \quad=\quad & \sum_{i = 1}^{m} \pi_{j} \cdot p_{i}. \\
+\Rightarrow\quad
+  & \underbrace{\lim_{m \to \infty} \lim_{n \to \infty} p_{j}}_{= p_{j}}
+    & \quad\ge\quad & \lim_{m \to \infty} \sum_{i = 1}^{m} \pi_{j} \cdot p_{i} \\
+  & & \quad=\quad & \sum_{i \in \mathcal{S}} \pi_{j} \cdot p_{i} \\
+  & & \quad=\quad & \pi_{j}.
+\end{alignat*}
+\end{proof}
+\end{inequality}
+
+\begin{inequality} \label{ineq:p-le-pi}
+If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $ and $ p $ is a stationary distribution of $ \mathbb{X} $, then $ p_{i} \le \pi_{i} $ holds for all $ i \in \mathcal{S} $.
+
+\begin{proof}
+Assume that $ p $ is the distribution of $ X(0) $,
+\begin{alignat*}{4}
+  & p_{j}
+    & \quad=\quad & P(X(n) = j) \\
+  & & \quad=\quad & \sum_{i \in \mathcal{S}} \mathbb{P}^{n}[i, j] \cdot p_{i} \\
+  & & \quad\le\quad & \sum_{i = 1}^{m} \mathbb{P}^{n}[i, j] \cdot p_{i} + \sum_{i > m} p_{i}. \\
+\Rightarrow\quad
+  & \lim_{n \to \infty} p_{j}
+    & \quad\le\quad & \lim_{n \to \infty} \sum_{i = 1}^{m} \mathbb{P}^{n}[i, j] \cdot p_{i} + \sum_{i > m} p_{i} \\
+  & & \quad=\quad & \sum_{i = 1}^{m} \pi_{j} \cdot p_{i} + \sum_{i > m} p_{i}. \\
+\Rightarrow\quad
+  & \underbrace{\lim_{m \to \infty} \lim_{n \to \infty} p_{j}}_{= p_{j}}
+    & \quad\le\quad & \lim_{m \to \infty} \sum_{i = 1}^{m} \pi_{j} \cdot p_{i} + \sum_{i > m} p_{i} \\
+  & & \quad=\quad & \sum_{i \in \mathcal{S}} \pi_{j} \cdot p_{i} + 0 \\
+  & & \quad=\quad & \pi_{j}.
+\end{alignat*}
+\end{proof}
+\end{inequality}
+
+\begin{theorem}
+If $ \mathbb{X} $ is irreducible, positive recurrent, and aperiodic, then
+\begin{enumerate}
+  \item the limiting probability $ \pi_{i} $ of each state $ i $ exists, and
+  \item $ \boldsymbol\pi = (\pi_{1}, \pi_{2}, \cdots) $ is the unique stationary distribution of $ \mathbb{X} $.
+\end{enumerate}
+
+\begin{proof}[proof (exists)]
+By \autoref{lem:lim-p_nij-exists}, \autoref{ineq:sum-pi-le-1}, and \autoref{eq:pi-eq-pi-times-p}, we know that
+\[ \frac{\boldsymbol\pi}{\sum_{j \in \mathcal{S}} \pi_{j}} \]
+is a stationary distribution.
+\end{proof}
+
+\begin{comment}
+By \autoref{lem:lim-p_nij-exists}, we know that the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $,
+\[ \sum_{j \in \mathcal{S}} \pi_{j} \neq \infty, \text{\hspace{1em} \small (by \autoref{ineq:sum-pi-le-1})} \]
+and
+\[ \frac{\boldsymbol\pi}{\sum_{j \in \mathcal{S}} \pi_{j}} = \frac{\boldsymbol\pi \mathbb{P}}{\sum_{j \in \mathcal{S}} \pi_{j}}. \text{\hspace{1em} \small (by \autoref{eq:pi-eq-pi-times-p})} \]
+\end{comment}
+
+\begin{proof}[proof (unique)]
+By \autoref{ineq:p-ge-pi} and \autoref{ineq:p-le-pi}, we know that the stationary distribution $ p $, which is equal to the limiting probability $ \pi_{i} $, is the unique stationary distribution of $ \mathbb{X} $.
+\end{proof}
+\end{theorem}
+
+\begin{example}
+Say that the matrix of transition probabilities of $ \mathbb{X} $ is
+\[ \mathbb{P} = \begin{bmatrix}
+  \alpha  & 1 - \alpha \\
+  \beta   & 1 - \beta
+\end{bmatrix}, 0 < \alpha, \beta < 1. \]
+Since $ \mathbb{X} $ is irreducible, possitive recurrent, and aperiodic {\color{red} (Why?)}, we know that $ \boldsymbol\pi \mathbb{P} = \boldsymbol\pi $, and hence
+\begin{eqnarray*}
+& & (x, 1 - x) \cdot \begin{bmatrix}
+  \alpha  & 1 - \alpha \\
+  \beta   & 1 - \beta
+\end{bmatrix} = (x, 1 - x) \\
+& \Rightarrow & \boldsymbol\pi = \left( \frac{\beta}{1 + \beta - \alpha}, \frac{1 - \alpha}{1 + \beta - \alpha} \right)
+\end{eqnarray*}
+\end{example}

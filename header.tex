@@ -53,6 +53,9 @@
 \newtheorem{observation}{\color{BrickRed} Observation}[chapter]
 \newtheorem{corollary}{\color{BrickRed} Corollary}[chapter]
 
+\newtheorem{equality}{\color{BrickRed} Equality}[chapter]
+\newtheorem{inequality}{\color{BrickRed} Inequality}[chapter]
+
 \theoremstyle{definition}
 \newtheorem{definition}{\color{BrickRed} Definition}[chapter]
 \newtheorem{example}{\color{BrickRed} Example}[chapter]
@@ -76,3 +79,9 @@
   {\bf #3}%
   \IfBooleanTF{#1}{}{\index{\IfNoValueTF{#2}{#3}{#2}}}%
 }
+
+% ===============================================
+%   Math Symbol
+% ===============================================
+
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
