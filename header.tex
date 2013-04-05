@@ -1,0 +1,78 @@
+% ===============================================
+%   Package
+% ===============================================
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks,linkcolor=NavyBlue]{hyperref}
+
+\usepackage{CJK}
+\usepackage{amsthm, amsmath, amssymb}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{import}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{thmtools}
+\usepackage{tikz}
+\usepackage{xparse}
+
+% ===============================================
+%   Import
+% ===============================================
+\newcommand{\ImportChapter}[1]{\import{#1/}{#1/main}}
+
+% ===============================================
+%   Layout
+% ===============================================
+
+\pagestyle{fancy}
+\topmargin=-0.45in
+\textheight=9.5in
+\advance\textwidth by 1.5in
+\advance\oddsidemargin by -0.75in
+\advance\evensidemargin by -0.75in
+
+\linespread{1.2}
+\setlength{\headwidth}{\textwidth}
+
+% ===============================================
+%   tikz
+% ===============================================
+
+\usetikzlibrary{arrows,positioning,automata}
+\tikzset{->,>=latex,shorten >=1pt,auto,node distance=5em}
+\tikzstyle{every state}=[draw=black,text=black,minimum size=3em]
+
+% ===============================================
+%   Theorem
+% ===============================================
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\color{BrickRed} Theorem}[chapter]
+\newtheorem{lemma}{\color{BrickRed} Lemma}[chapter]
+\newtheorem{observation}{\color{BrickRed} Observation}[chapter]
+\newtheorem{corollary}{\color{BrickRed} Corollary}[chapter]
+
+\theoremstyle{definition}
+\newtheorem{definition}{\color{BrickRed} Definition}[chapter]
+\newtheorem{example}{\color{BrickRed} Example}[chapter]
+\newtheorem{question}{\color{BrickRed} Question}[chapter]
+\newtheorem{exercise}{\color{BrickRed} Exercise}[chapter]
+
+\theoremstyle{remark}
+\newtheorem*{comment}{Comment}
+\AtBeginEnvironment{comment}{\color{gray}}
+
+% ===============================================
+%   Term Index
+% ===============================================
+
+\makeindex
+\NewDocumentCommand{\defterm}{som}{%
+  {\it #3}%
+  \IfBooleanTF{#1}{}{\index{\IfNoValueTF{#2}{#3}{#2}}}%
+}
+\NewDocumentCommand{\keyterm}{som}{%
+  {\bf #3}%
+  \IfBooleanTF{#1}{}{\index{\IfNoValueTF{#2}{#3}{#2}}}%
+}

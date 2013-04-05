@@ -1,0 +1,84 @@
+\section{Introduction}
+
+\begin{definition}
+A \keyterm{stochastic process} $ \mathbb{X} $ with \keyterm{state space} $ \mathcal{S} $ is a \defterm{Markov chain} if there exist numbers $ p_{ij} $ for all states $ i, j \in \mathcal{S} $ and that $ 0 \le p_{ij} \le 1 $ and $ \sum_{j \in \mathcal{S}} p_{ij} = 1 $,
+\[ P(X(t + 1) = j \mid X(0) = i_{0}, X(1) = i_{1}, \cdots, X(t) = i_{i}) = p_{ij}. \]
+
+\begin{comment}
+The above conditional probability is independent $ i_{0}, \cdots, i_{t - 1} $, and $ t $. Therefore,
+\[ P(X(t + 1) = j \mid X(t) = i_{i}) = P(X(t + l + 1) = j \mid X(t + l) = i_{i}). \]
+\end{comment}
+\end{definition}
+
+\begin{definition}
+$ \mathbb{P} = [ p_{ij} ] $, $ i, j \in \mathcal{S} $ is called \defterm{matrix of transition probabilities}.
+$ \mathbb{P}^{(n)} = \mathbb{P}^{n} = [ p^{(n)}_{ij} ] $ is called \defterm{matrix of $ n $-step transition probabilities}.
+\begin{eqnarray*}
+p^{(n + 1)}_{ij}
+  & = & P(X(n + 1) = j \mid X(0) = i) \\
+  & = & \sum_{k \in \mathcal{S}} P(X(n + 1) = j \mid X(1) = k, X(0) = i) \cdot P(X(1) = k \mid X(0) = i) \\
+  & = & \sum_{k \in \mathcal{S}} \mathbb{P}^{n}[k, j] \cdot \mathbb{P}[i, k] \\
+  & = & \text{inner product of the $ i $-th row of $ \mathbb{P} $ and $ j $-th column of $ \mathbb{P}^{n} $} \\
+  & \Rightarrow & \mathbb{P}^{n + 1} = \mathbb{P} \cdot \mathbb{P}^{n}.
+\end{eqnarray*}
+\end{definition}
+
+\begin{question} \label{q:balls}
+8 個桶子 9 顆球，每次投一顆球進任何一個桶子的機率都是 $ \frac{1}{8} $。問：丟完九個球之後，只有三個桶子裡有球的機率？
+\[ \mathbb{P} = \bordermatrix{
+    & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \cr
+  1 & \frac{1}{8} & \frac{7}{8} & 0 & 0 & 0 & 0 & 0 & 0 \cr
+  2 & 0 & \frac{2}{8} & \frac{6}{8} & 0 & 0 & 0 & 0 & 0 \cr
+  3 & 0 & 0 & \frac{3}{8} & \frac{5}{8} & 0 & 0 & 0 & 0 \cr
+  4 & 0 & 0 & 0 & \frac{4}{8} & \frac{4}{8} & 0 & 0 & 0 \cr
+  5 & 0 & 0 & 0 & 0 & \frac{5}{8} & \frac{3}{8} & 0 & 0 \cr
+  6 & 0 & 0 & 0 & 0 & 0 & \frac{6}{8} & \frac{2}{8} & 0 \cr
+  7 & 0 & 0 & 0 & 0 & 0 & 0 & \frac{7}{8} & \frac{1}{8} \cr
+  8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac{8}{8}
+} \]
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}
+  \node[state] (X1)              {$ 1 $};
+  \foreach \x in {2,...,8}{
+    \pgfmathtruncatemacro{\y}{\x - 1}
+    \node[state] (X\x) [right of=X\y] {$ \x $};
+  }
+
+  \path (X8) edge [loop above] (X8);
+  \foreach \x in {2,...,8}{
+    \pgfmathtruncatemacro{\y}{\x - 1}
+    \path (X\y) edge [bend right=0] (X\x)
+          (X\y) edge [loop above] (X\y);
+  }
+\end{tikzpicture}
+\end{figure}
+
+答：$ \mathbb{P}^{8} [1, 3] $。
+\end{question}
+
+% ===============================================
+%   State Space Reduction
+% ===============================================
+\subsection{State Space Reduction}
+
+Say that $ A $ is a set of \keyterm{accepting states}, we want to know
+\[ P(X(t) \in A \mid X(0) = i), \]
+we can make a \keyterm{abosrbing state} $ a $, and let
+\[ \mathbb{Q}[i, j] = \begin{cases}
+  \mathbb{P}[i, j]                & \text{if } a \not\in \{i, j\}, \\
+  1                               & \text{if } i = a = j, \\
+  \sum_{k \in A} \mathbb{P}[i, k] & \text{if } i \neq a, j = a, \\
+  0                               & \text{otherwise.}
+\end{cases} \]
+
+\begin{example}
+\autoref{q:balls} 中，由於 state 4 到 8 回到前 3 個 state 的機率皆為 0，所以我們可以將 state 4 到 8 合併成 absorbing state $ a $。
+\[ \mathbb{Q} = \bordermatrix{
+    & 1 & 2 & 3 & a \cr
+  1 & \frac{1}{8} & \frac{7}{8} & 0 & 0 \cr
+  2 & 0 & \frac{2}{8} & \frac{6}{8} & 0 \cr
+  3 & 0 & 0 & \frac{3}{8} & \frac{5}{8} \cr
+  a & 0 & 0 & 0 & 1 \cr
+} \]
+\end{example}

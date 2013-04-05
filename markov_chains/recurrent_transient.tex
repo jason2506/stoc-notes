@@ -1,0 +1,159 @@
+\section{Recurrent and Transient}
+
+\begin{definition}
+$ f_{i} = P(\exists t \ge 1. X(t) = i \mid X(0) = i) $ is called \defterm{recurrent probability} of state $ i $ {\small \color{gray} (時間 $ 0 $ 從 $ i $ 出發，最終會回到 $ i $ 的機率)}.
+\begin{itemize}
+  \item state $ i $ is \defterm{recurrent} if $ f_{i} = 1 $,
+  \item state $ i $ is \defterm{transient} if $ f_{i} < 1 $,
+  \item $ \mathbb{X} $ is \defterm*{recurrent} if all states of $ \mathbb{X} $ are recurrent,
+  \item $ \mathbb{X} $ is \defterm*{transient} if all states of $ \mathbb{X} $ are transient.
+\end{itemize}
+\end{definition}
+
+\begin{observation}
+Let $ T_{i} $ be the number of time indices $ t $ with $ X(t) = i $, including time $ 0 $ (support that $ X(0) = i $),
+\[ E[T_{i} \mid X(0) = i] = \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i]. \]
+
+\begin{proof}
+Let
+\[
+T^{(t)}_{i} =
+  \begin{cases}
+    1 & \text{if } X(t) = i, \\
+    0 & \text{otherwise.}
+  \end{cases}
+\]
+we get
+\[ T_{i} = \sum_{t = 0}^{\infty} T^{(t)}_{i}. \]
+Therefore,
+\begin{eqnarray*}
+E[T_{i} \mid X(0) = i]
+  & = & \sum_{t = 0}^{\infty} E[T^{(t)}_{i} \mid X(0) = i] \\
+  & = & \sum_{t = 0}^{\infty} P[T^{(t)}_{i} = 1 \mid X(0) = i] \\
+  & = & \sum_{t = 0}^{\infty} P[X(t) = i \mid X(0) = i] \\
+  & = & \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i].
+\end{eqnarray*}
+\end{proof}
+\end{observation}
+
+\begin{lemma}
+State $ i $ is recurrent iff $ \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i] = \infty $.
+\begin{proof}[proof $ (\Rightarrow) $]
+\begin{eqnarray*}
+\sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i]
+  & = & E[T_{i} \mid X(0) = i] \\
+  & = & \sum_{t = 0}^{\infty} k \cdot P(T_{i} = k \mid X(0) = i) \\
+  & = & \infty.
+\end{eqnarray*}
+\end{proof}
+
+\begin{proof}[proof $ (\Leftarrow) $]
+Assume that $ f_{i} < 1 $ and hence $ P(T_{i} = k \mid X(0) = i) = f_{i}^{k - 1} \cdot (1 - f_{i}) $. We know that $ T_{i} $ is a geometic distribution with success probability $ (1 - f_{i}) $. Thus,
+\[ E[T_{i} | X(0) = i] = \frac{1}{1 - f_{i}} < \infty, \]
+contradiction.
+\end{proof}
+\end{lemma}
+
+\begin{corollary} \label{cor:finite-X-has-recurrent-state}
+Every finite $ \mathbb{X} $ has at least one recurrent state.
+\begin{proof}
+If there is no recurrent state, then $ E[T_{i} \mid X(0) = i] $ is finite for all state $ i $, and hence the excepted number of steps is finite. Contradiction.
+\end{proof}
+\end{corollary}
+
+\begin{definition}
+States $ i, j $ \defterm{communicate} if there are $ m $ and $ n $ s.t.
+\[ \mathbb{P}^{m}[j, i] \cdot \mathbb{P}^{n}[i, j] > 0, \]
+written as $ i \leftrightarrow j $.
+\end{definition}
+
+\begin{lemma} \label{lem:communicate}
+If $ i \leftrightarrow j $, then
+\begin{itemize}
+  \item $ i $ is recurrent iff $ j $ is recurrent,
+  \item $ i $ is transient iff $ j $ is transient.
+\end{itemize}
+\begin{proof}[proof ($ i $ is recurrent $ \Rightarrow $ $ j $ is recurrent)]
+\begin{eqnarray*}
+\sum_{t = 0}^{\infty} \mathbb{P}^{t}[j, j]
+  & \ge & \sum_{t = 0}^{\infty} \mathbb{P}^{t + m + n}[j, j] \\
+  & \ge & \sum_{t = 0}^{\infty} \mathbb{P}^{m}[j, i] \cdot \mathbb{P}^{t}[i, i] \cdot \mathbb{P}^{n}[i, j] \\
+  & = & \mathbb{P}^{m}[j, i] \cdot \mathbb{P}^{t}[i, i] \cdot \underbrace{\sum_{t = 0}^{\infty} \mathbb{P}^{n}[i, j]}_{= \infty} \\
+  & = & \infty.
+\end{eqnarray*}
+\end{proof}
+\end{lemma}
+
+\begin{definition}
+$ \mathbb{X} $ is \defterm{irreducible} if $ i \leftrightarrow j $ for all states $ i, j $ of $ \mathbb{X} $.
+\end{definition}
+
+\begin{corollary}
+If $ \mathbb{X} $ is finite and irreducible, then $ \mathbb{X} $ is recurrent.
+\begin{proof}
+Immedate from \autoref{cor:finite-X-has-recurrent-state} and \autoref{lem:communicate}.
+\end{proof}
+\end{corollary}
+
+\begin{example}
+All of states are recurrent.
+\begin{multicols}{2}
+\[ \bordermatrix{
+    & 1 & 2 & 3 & 4 \cr
+  1 & 0 & 0 & + & + \cr
+  2 & + & 0 & 0 & 0 \cr
+  3 & 0 & + & 0 & 0 \cr
+  4 & 0 & + & 0 & 0
+} \]
+
+\null \vfill
+\null \vfill
+\begin{tikzpicture}
+  \node[state] (A)              {$ 1 $};
+  \node[state] (B) [right of=A] {$ 2 $};
+  \node[state] (C) [right of=B] {$ 3 $};
+  \node[state] (D) [right of=C] {$ 4 $};
+
+  \path (A) edge [bend left=40,] (C)
+            edge [bend right=50] (D)
+        (B) edge [bend left=40] (A)
+        (C) edge [bend left=40] (B)
+        (D) edge [bend left=45] (B);
+\end{tikzpicture}
+\end{multicols}
+\end{example}
+
+\begin{example}
+State 5 is transient, all other states are recurrent.
+\begin{multicols}{2}
+\[ \bordermatrix{
+    & 1 & 2 & 3 & 4 & 5 \cr
+  1 & + & + & 0 & 0 & 0 \cr
+  2 & + & + & 0 & 0 & 0 \cr
+  3 & 0 & 0 & + & + & 0 \cr
+  4 & 0 & 0 & + & + & 0 \cr
+  5 & + & + & 0 & 0 & +
+} \]
+
+\null \vfill
+\null \vfill
+\begin{tikzpicture}
+  \node[state] (A)              {$ 1 $};
+  \node[state] (B) [right of=A] {$ 2 $};
+  \node[state] (C) [below of=A] {$ 3 $};
+  \node[state] (D) [right of=C] {$ 4 $};
+  \node[state] (E) [right of=B] {$ 5 $};
+
+  \path (A) edge [loop left] (A)
+            edge [bend left=40] (B)
+        (B) edge [bend left=40] (A)
+            edge [loop right] (B)
+        (C) edge [loop left] (C)
+            edge [bend left=40] (D)
+        (D) edge [bend left=40] (C)
+            edge [loop right] (D)
+        (E) edge [bend right=50] (A)
+            edge [bend right=40] (B);
+\end{tikzpicture}
+\end{multicols}
+\end{example}
