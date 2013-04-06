@@ -26,7 +26,7 @@ P(X(1) = i)
   & = & \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j] \\
   & = & \pi_{j},
 \end{eqnarray*}
-for all $ j \in \mathcal{S} $
+for all $ j \in \mathcal{S} $.
 \end{comment}
 \end{definition}
 
@@ -85,7 +85,7 @@ and hence
 \end{inequality}
 
 \begin{inequality} \label{ineq:pi-ge-pi-times-p}
-If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $, then $ \pi_{i} \ge \sum_{i \in \mathcal{S}} \pi_{i} \mathbb{P}[i, j] $ holds for all state $ j \in \mathcal{S} $.
+If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $, then $ \pi_{i} \ge \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j] $ holds for all state $ j \in \mathcal{S} $.
 
 \begin{proof}
 For all $ m, n \ge 1 $,
@@ -207,3 +207,178 @@ Since $ \mathbb{X} $ is irreducible, possitive recurrent, and aperiodic {\color{
 & \Rightarrow & \boldsymbol\pi = \left( \frac{\beta}{1 + \beta - \alpha}, \frac{1 - \alpha}{1 + \beta - \alpha} \right)
 \end{eqnarray*}
 \end{example}
+
+\begin{definition}
+$ r_{j} $ is the \defterm{long-run proportion} of state $ j $ if
+\[ r_{j} = \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, j] \]
+holds for all states $ i \in \mathcal{S} $.
+
+\begin{comment}
+Why this name?
+
+Support $ N $ is a uniform distribution over $ \{ 1, \cdots, n \} $. The ``long-run proportion of state $ j $'' is
+\begin{eqnarray*}
+  &   & \lim_{n \to \infty} P(X(N) = j \mid X(0) = i) \\
+  & = & \lim_{n \to \infty} P(X(N) = j \mid N = t, X(0) = i) \cdot P(N = t \mid X(0) = i) \\
+  & = & \lim_{n \to \infty} P(X(N) = j \mid X(0) = i) \cdot \frac{1}{n} \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, j]
+\end{eqnarray*}
+
+(Proportion：state 在 t 時間內出現的比例有多高。)
+\end{comment}
+\end{definition}
+
+\begin{lemma} \label{lem:r-eq-rp}
+If the long-run proportions $ r_{j} $ of all states $ j $ exist, then $ \mathbf{r} = (r_{1}, r_{2}, \cdots) = \mathbf{r}\mathbb{P} $.
+
+\begin{proof}
+Let $ \mathbb{R} = [\mathbf{r}^{\intercal}, \cdots, \mathbf{r}^{\intercal}]^{\intercal} = \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} $,
+\begin{eqnarray*}
+\mathbb{R}\mathbb{P}
+  & {\color{red} =} & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1} \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}
+      + \underbrace{\lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} (\mathbb{P}^{t + 1} - \mathbb{P}^{t})}_{= 0} \\
+  & = & \mathbb{R}.
+\end{eqnarray*}
+\end{proof}
+
+\begin{comment}
+\begin{eqnarray*}
+(\mathbb{R}\mathbb{P})[i, j]
+  & = & \sum_{k \in \mathcal{S}} r_{k} \cdot \mathbb{P}[k, j] \\
+  & = & \sum_{k \in \mathcal{S}} \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, k] \right) \cdot \mathbb{P}[k, j] \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1}[i, j]. \\
+\end{eqnarray*}
+\end{comment}
+\end{lemma}
+
+\begin{lemma} \label{lem:pi-eq-r}
+If $ \boldsymbol\pi $ is a stationary distribution of $ \mathbb{X} $, and $ \mathbf{r} $ is a long-run proportion of $ \mathbb{X} $, then $ \boldsymbol\pi = \mathbf{r} $.
+
+\begin{proof}
+Let $ \mathbb{R} = [\mathbf{r}^{\intercal}, \cdots, \mathbf{r}^{\intercal}]^{\intercal} = \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} $,
+\begin{eqnarray*}
+\mathbf{r}
+  & = & \boldsymbol\pi \mathbb{R}
+    \text{ \hspace{1em}\small(since $ \textstyle\sum_{k \in \mathcal{S}} \pi_{k} = 1 $)} \\
+  & = & \boldsymbol\pi \cdot \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} \right) \\
+  & {\color{red} =} & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \boldsymbol\pi \mathbb{P}^{t} \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \boldsymbol\pi \\
+  & = & \boldsymbol\pi.
+\end{eqnarray*}
+\end{proof}
+
+\begin{comment}
+\begin{eqnarray*}
+(\boldsymbol\pi \mathbb{R})[i, j]
+  & = & \sum_{k \in \mathcal{S}} \pi_{k} \cdot r_{j} \\
+  & = & r_{j} \sum_{k \in \mathcal{S}} \pi_{k} \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, j] \cdot \sum_{k \in \mathcal{S}} \pi_{k} \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \boldsymbol\pi \mathbb{P}^{t}[i, j] \\
+\end{eqnarray*}
+\end{comment}
+\end{lemma}
+
+\begin{theorem}
+If $ \mathbb{X} $ is irreducible (and the long-run proportions $ r_{j} $ of all states $ j $ exist), and $ \sum_{j \in \mathcal{S}} r_{j} = 1 $, then $ \mathbf{r} = (r_{1}, r_{2}, \cdots) $ is the unique stationary distribution of $ \mathbb{X} $.
+
+\begin{proof}
+Immedate from \autoref{lem:r-eq-rp} and \autoref{lem:pi-eq-r}.
+\end{proof}
+\end{theorem}
+
+\begin{example}
+\[ \bordermatrix{
+    & \text{大} & \text{小} \cr
+  \text{大} & \frac{1}{4} & \frac{3}{4} \cr
+  \text{小} & \frac{1}{5} & \frac{4}{5}
+}, \mathbf{r} = \boldsymbol\pi = \left( \frac{4}{19}, \frac{15}{19} \right). \]
+\end{example}
+
+\begin{example}
+Let $ \mathcal{G} = \{ g_{1}, g_{2}, \cdots \} $ be the set of good states, $ \mathcal{B} = \{ b_{1}, b_{2}, \cdots \} $ be the set of bad states, and $ \mathcal{S} = \mathcal{G} \cup \mathcal{B} $. If $ \mathbb{X} $ is irreducible, then
+\begin{description}
+  \item[Q1.] What's the break down (transition from good state to bad state) rate of $ \mathbb{X} $?
+  \item[Q2.] What's the excepted time of staying in good states ($ \mu_{\mathcal{G}} $)?
+  \item[Q3.] What's the excepted time of staying in bad states ($ \mu_{\mathcal{B}} $)?
+\end{description}
+
+\begin{description}
+  \item[A1.] \[ \sum_{i \in \mathcal{G}} \sum_{j \in \mathcal{B}} r_{i} \cdot \mathbb{P}[i, j]. \]
+  \item[A2 \& A3.]
+    Let $ G_{t} $ be the length of the $ t $-th phase of consecution good states, and $ B_{t} $ be the length of the $ t $-th phase of consecution bad states. According to the law of large numbers (LLN),
+    \[ P \left( \lim_{t \to \infty} \frac{1}{t} \sum_{\tau = 1}^{t} (G_\tau + B_\tau) = \mu_{\mathcal{G}} + \mu_{\mathcal{B}} \right) = 1, \]
+    and hence
+    \begin{equation}
+    \sum_{i \in \mathcal{G}} \sum_{j \in \mathcal{B}} r_{i} \cdot \mathbb{P}[i, j] = \frac{1}{\mu_{\mathcal{G}} + \mu_{\mathcal{B}}}. \label{eqn:a1}
+    \end{equation}
+
+    The long-run proportion of good states is
+    \begin{eqnarray}
+    \sum_{i \in \mathcal{G}} r_{i}
+      & = & \lim_{t \to \infty} \frac{\sum_{\tau = 1}^{t} G_{\tau} / t}{\sum_{\tau = 1}^{t} (G_{\tau} + B_{\tau}) / t} \nonumber \\
+      & = & \frac{\mu_{\mathcal{G}}}{\mu_{\mathcal{G}} + \mu_{\mathcal{B}}}, \label{eqn:a2}
+    \end{eqnarray}
+    and the long-run proportion of bad states is
+    \begin{eqnarray}
+    \sum_{i \in \mathcal{B}} r_{i}
+      & = & \lim_{t \to \infty} \frac{\sum_{\tau = 1}^{t} B_{\tau} / t}{\sum_{\tau = 1}^{t} (G_{\tau} + B_{\tau}) / t} \nonumber \\
+      & = & \frac{\mu_{\mathcal{B}}}{\mu_{\mathcal{G}} + \mu_{\mathcal{B}}}. \label{eqn:a3}
+    \end{eqnarray}
+
+    By (\ref{eqn:a2}) / (\ref{eqn:a1}), we get
+    \[ \mu_{\mathcal{G}} = \frac{\sum_{i \in \mathcal{G}} r_{i}}{\sum_{i \in \mathcal{G}} \sum_{j \in \mathcal{B}} r_{i} \cdot \mathbb{P}[i, j]}. \]
+
+    By (\ref{eqn:a3}) / (\ref{eqn:a1}), we get
+    \[ \mu_{\mathcal{B}} = \frac{\sum_{i \in \mathcal{B}} r_{i}}{\sum_{i \in \mathcal{G}} \sum_{j \in \mathcal{B}} r_{i} \cdot \mathbb{P}[i, j]}. \]
+\end{description}
+\end{example}
+
+\begin{theorem} \label{thm:long-run}
+If $ \mathbb{X} $ is irreducible, the long-run proportion $ r_{i} $ of each state $ i \in \mathcal{S} $ exists with probability $ 1 $. Specifically,
+\begin{enumerate}
+  \item If $ i $ is positive recurrent, then $ P \left( r_{i} = \frac{1}{\mu_{i}} \right) = 1 $.
+  \item If $ i $ is null recurrent or transient, then $ P(r_{i} = 0) = 1 $.
+\end{enumerate}
+
+\begin{proof}
+Support $ X(0) = i $. Let $ T_{k} $ be the number of transitions required for $ \mathbb{X} $ to go from the $ k $-th $ i $ to $ (k + 1) $-th $ i $. Therefore, $ T_{1}, T_{2}, \cdots $ are i.i.d. with expectation $ \mu_{i} $. According to LLN,
+\[ P \Bigg( \underbrace{\lim_{k \to \infty} \frac{1}{k} \sum_{t = 1}^{k} T_{t}}_{= \frac{1}{r_{i}}} = \mu_{i} \Bigg) = 1. \]
+Thus, we get $ P \left( r_{i} = \frac{1}{\mu_{i}} \right) = 1 $ holds for all recurrent (both positive recurrent and null recurrent) state $ i $.
+
+As for the case that $ i $ is transient, we know that the excepted number of visiting $ i < \infty $. That is, $ P(r_{i} = 0) = 1 $.
+\end{proof}
+\end{theorem}
+
+\begin{example}
+If $ \mathbb{X} $ is finite and irreducible, then $ \mathbb{X} $ is positive recurrent with probability $ 1 $. Why?
+
+If $ \mathbb{X} $ is null recurrent, then $ r_{i} = 0 $ for all states $ i $, which makes a contradiction.
+\end{example}
+
+\begin{example}
+\nameref{subsec:infinite-states} is null recurrent.
+
+If it is positive recurrent, then $ r_{i} > 0 $ for all $ i \in \mathcal{S} $ (by \autoref{thm:long-run}).
+In addition, by \autoref{lem:r-eq-rp}, we know that $ \mathbf{r}\mathbb{P} = \mathbf{r} $, where $ \mathbf{r} = (\cdots, r_{-1}, r_{0}, r_{1}, \cdots) $. Thus, $ \frac{1}{2} (r_{i - 1} + r_{i + 1}) = r_{i} $ for all $ i \in \mathcal{S} $. That is, $ \mathbf{r} $ is an infinite arithmetic progression, and $ \sum_{i \in \mathcal{S}} = \infty $, contradiction.
+\end{example}
+
+\begin{corollary}
+If $ \mathbb{X} $ is irreducible, then with probability 1, we have
+\[ \mathbb{X} \text{ is positive recurrent}
+  \Leftrightarrow \mathbb{X} \text{ admits a stationary distribution.} \]
+
+\begin{proof}[proof ($ \Rightarrow $)]
+By \autoref{thm:long-run}, $ r_{i} > 0 $ exists for each $ i \in \mathcal{S} $. In addition, by \autoref{lem:r-eq-rp}, $ \mathbf{r}\mathbb{P} = \mathbf{r} $. Therefore,
+\[ \frac{r}{\sum_{i \in \mathcal{S}} r_{i}} \]
+is a stationary distribution of $ \mathbb{X} $.
+\end{proof}
+
+\begin{proof}[proof ($ \Leftarrow $)]
+If $ \mathbb{X} $ is not positive recurrent, then $ r_{i} = 0 $ for all $ i \in \mathcal{S} $ with probability 1.
+
+Since $ \mathbb{X} $ admits stationary distribution, we know that $ \boldsymbol\pi = \mathbf{r} $ (by \autoref{lem:pi-eq-r}), and hence $ \pi_{i} = 0 $ for all $ i \in \mathcal{S} $. That is, $ \sum_{i \in \mathcal{S}} \pi_{i} = 0 $, contradiction.
+\end{proof}
+\end{corollary}
