@@ -1,13 +1,18 @@
 \section{Introduction}
 
 \begin{definition}
-A \keyterm{stochastic process} $ \mathbb{X} $ with \keyterm{state space} $ \mathcal{S} $ is a \defterm{Markov chain} if there exist numbers $ p_{ij} $ for all states $ i, j \in \mathcal{S} $ and that $ 0 \le p_{ij} \le 1 $ and $ \sum_{j \in \mathcal{S}} p_{ij} = 1 $,
-\[ P(X(t + 1) = j \mid X(0) = i_{0}, X(1) = i_{1}, \cdots, X(t) = i_{i}) = p_{ij}. \]
+A \keyterm{stochastic process} $ \mathbb{X} $ with \keyterm{state space} $ \mathcal{S} $ is a \defterm{Markov chain} if there exist numbers $ p_{ij} $ for any states $ i, j \in \mathcal{S} $ such that 
+\begin{itemize}
+\item $ 0 \le p_{ij} \le 1 $ 
+\item $ \sum_{j \in \mathcal{S}} p_{ij} = 1 $,
+\item $ p_{ij} = P(X(t + 1) = j \mid X(0) = i_{0}, X(1) = i_{1}, \cdots, X(t) = i_{i}). $
+\end{itemize}
 
 \begin{comment}
 The above conditional probability is independent $ i_{0}, \cdots, i_{t - 1} $, and $ t $. Therefore,
 \[ P(X(t + 1) = j \mid X(t) = i_{i}) = P(X(t + l + 1) = j \mid X(t + l) = i_{i}). \]
 \end{comment}
+\todo{jaiyalas}{$i_i? \lor i?$ 義大利?}
 \end{definition}
 
 \begin{definition}
@@ -21,7 +26,47 @@ p^{(n + 1)}_{ij}
   & = & \text{inner product of the $ i $-th row of $ \mathbb{P} $ and $ j $-th column of $ \mathbb{P}^{n} $} \\
   & \Rightarrow & \mathbb{P}^{n + 1} = \mathbb{P} \cdot \mathbb{P}^{n}.
 \end{eqnarray*}
+\begin{comment}
+There are several properties about a matrix of transition probabilities. 
+\begin{itemize}
+\item $\mathbb{P} \text{ models } \mathbb{X}$
+\item Any row summation of $\mathbb{P} = 1$.
+\item $0\leq\text{column summation of }\mathbb{P}\leq\text{size of }\mathcal{S}$
+\end{itemize}
+\end{comment}
 \end{definition}
+
+\begin{example} 
+一個袋子中有兩顆球(藍綠各一顆)，每次取出一球後以 $0.8$ 的機率原球放回袋中；以 $0.2$ 的機率換成另一個顏色的球放入袋中。問：第五次取出綠球的機率是？又假設一開始的袋子中是兩顆藍球，則第五次取出綠球的機率是？
+
+令 $G(t) =$ 取第 $t$ 次之後袋子中綠球的數量，則與 G 對應之 Matrix of transition probabilities 如下
+\begin{multicols}{2}
+\[ \mathbb{P} = \bordermatrix{
+    &  0 & 1  &  2 \cr
+  0 & .8 & .2 &  0 \cr
+  1 & .1 & .8 & .1 \cr
+  2 &  0 & .2 & .8 
+} \]
+\null \vfill
+\null \vfill
+\begin{tikzpicture}
+  \node[state] (X0)              {$ 0 $};
+  \node[state] (X1) [right of=X0] {$ 1 $};
+  \node[state] (X2) [right of=X1] {$ 2 $};
+  \path (X0) edge [loop above] node {$0.8$} (X0)
+        (X1) edge [loop above] node {$0.8$} (X1)
+        (X2) edge [loop above] node {$0.8$} (X2);
+  \path (X0) edge [bend left=20] node {$0.2$} (X1)
+        (X1) edge [bend left=20] node {$0.1$} (X0);
+  \path (X2) edge [bend left=20] node {$0.2$} (X1)
+        (X1) edge [bend left=20] node {$0.1$} (X2);
+\end{tikzpicture}
+\end{multicols}
+
+答：
+\[A_1 = \mathbb{P}^4[1,2] \cdot 1 + \mathbb{P}^4[1,1] \cdot \frac{1}{2} + \mathbb{P}^4[1,0] \cdot 0 = 0.5\]
+\[A_2 = \mathbb{P}^4[0,2] \cdot 1 + \mathbb{P}^4[0,1] \cdot \frac{1}{2} + \mathbb{P}^4[0,0] \cdot 0 = 0.2952\]
+\end{example}
 
 \begin{question} \label{q:balls}
 8 個桶子 9 顆球，每次投一顆球進任何一個桶子的機率都是 $ \frac{1}{8} $。問：丟完九個球之後，只有三個桶子裡有球的機率？
@@ -72,6 +117,10 @@ we can make a \keyterm{abosrbing state} $ a $, and let
   0                               & \text{otherwise.}
 \end{cases} \]
 
+\begin{comment}
+An accepting states, $ A $, is built according to the question. 
+\end{comment}
+
 \begin{example}
 \autoref{q:balls} 中，由於 state 4 到 8 回到前 3 個 state 的機率皆為 0，所以我們可以將 state 4 到 8 合併成 absorbing state $ a $。
 \[ \mathbb{Q} = \bordermatrix{
@@ -81,4 +130,26 @@ we can make a \keyterm{abosrbing state} $ a $, and let
   3 & 0 & 0 & \frac{3}{8} & \frac{5}{8} \cr
   a & 0 & 0 & 0 & 1 \cr
 } \]
+\end{example}
+
+\begin{example}
+假設隨機銀行中有個不為人知的帳戶$X$(裡面已經有$3$萬元)。每個月該帳戶都會有神秘善心人士存入$2$萬，
+但是同時會被竊賊偷走 $1$, $2$, $3$ 或 $4$ 萬元(偷多少錢的機率是一樣的)。
+另外，每個月月底結算之時隨機政府會將帳戶中超過$3$萬的金額全部視為存款稅沒收。
+問：前四個月該帳戶中的存款曾經少於等於$1$萬元的機率？
+
+觀察1：帳戶中可能的金額為 $\mathcal{S} = \{3,2,1,0,-1,-2,...\}$ (萬元)。
+觀察2：根據問題可知 accepting states $=\{1,0,-1,-2,...\} = a$
+
+\[ \mathbb{P} = \bordermatrix{
+    & a   & 2   & 3   \cr
+  a & 1   & 0   & 0   \cr
+  2 & .5  & .25 & .25 \cr
+  3 & .25 & .25 & .5 
+} \]
+
+$n$ 步中曾經進過 $A$ 中的機率 = $P(\exists t \in \{0,1,...,n\} . X(t)\in A \mid X(0) = s)$
+
+答：前四個月曾經小於等於$1$萬$\equiv$第四個月結算的時候第一次小於等於$1$萬。$A = \mathbb{P}^4[3,a] = 0.7851$
+
 \end{example}
