@@ -1,0 +1,63 @@
+\section{Branching Processes}
+
+\begin{question}
+一開始有 X(0) 個 life forms，每個 life form 以 $ p_{i} $ 的機率產生 $ i $（$ i = 0, \cdots, m $）個後代，然後死去。
+What's the probability of extinction?
+
+\begin{description}
+  \item[Case 1] $ p_{0} = 0 \Rightarrow $ 不會 extinction
+  \item[Case 2] $ p_{0} > 0 $,
+
+    Let $ X(t) $ be the population size of $ t $-th generation, $ \mathcal{S} = \{ 0, 1, \cdots \} $.
+    \begin{itemize}
+      \item State 0 is recurrent, other states are transient.
+      \item 所以不是 extinct 就是 $ \lim_{t \to \infty} X(t) = \infty $。
+      \item 假設 $ X(n - 1) = i $，令 $ Z_{k} $（$ k = 1, \cdots, i $）為 $ k $-th lift form 在 $ n $-th generation 的後代數。 \\
+        $ \Rightarrow Z_{1}, \cdots, Z_{i} $ i.i.d. with $ \mu = \sum_{j = 1}^{m} j \cdot p_{j} $.
+        \begin{eqnarray*}
+          & & E[X(n) \mid X(n - 1) = i] = i \cdot \mu \\
+          & \Rightarrow & E[X(n) \mid X(n - 1)] = X(n - 1) \cdot \mu \\
+          & \Rightarrow & E[X(n)] = E[E[X(n) \mid X(n - 1)]] = E[X(n - 1)] \cdot \mu = X(0) \cdot \mu^{n}
+        \end{eqnarray*}
+      \item Probability of extinction $ e_{i} = P(\text{extinction} \mid X(0) = i) $.
+        \begin{description}
+          \item[Case 2-1] $ \mu < 1 $,
+            \begin{eqnarray*}
+              1 - e_{i}
+                & = & \lim_{n \to \infty} P(X(n) \ge 1 \mid X(0) = i) \\
+                & = & \lim_{n \to \infty} \sum_{j = 1}^{\infty} P(X(n) = j \mid X(0) = i) \\
+                & \le & \lim_{n \to \infty} \sum_{j = 1}^{\infty} j \cdot P(X(n) = j \mid X(0) = i) \\
+                & = & \lim_{n \to \infty} E[X(n) \mid X(0) = i] \\
+                & = & \lim_{n \to \infty} i \cdot \mu^{n} \\
+                & = & 0.
+            \end{eqnarray*}
+          \item[Case 2-2] $ \mu \ge 1 $,
+            \begin{eqnarray*}
+              e_{i}
+                & = & \sum_{j = 0}^{m} P(\text{extinction} \mid X(0) = i) \cdot \mathbb{P}[i, j] \\
+                & = & \sum_{j = 0}^{m} e_{j} \cdot p_{j} \\
+                & = & \sum_{j = 0}^{m} e_{i}^{j} \cdot p_{j}.
+            \end{eqnarray*}
+        \end{description}
+    \end{itemize}
+\end{description}
+\end{question}
+
+\begin{example}
+\begin{eqnarray*}
+  & & p_{0} = 0.5, p_{1} = p_{2} = 0.25 \\
+  & \Rightarrow & \mu = 1 \cdot 0.25 + 2 \cdot 0.25 = 0.75 < 1 \\
+  & \Rightarrow & e_{i} = 1 \text{ for all } i.
+\end{eqnarray*}
+\end{example}
+
+\begin{example}
+\begin{eqnarray*}
+  & & p_{0} = p_{1} = 0.5, p_{2} = 0.25 \\
+  & \Rightarrow & \mu = 1 \cdot 0.25 + 2 \cdot 0.5 = 1.25 \\
+  & \Rightarrow & e_{i} = 0.25 + 0.25 \cdot e_{1} + 0.5 \cdot e_{1}^{2} \\
+  & \Rightarrow & e_{1} \in \{ 0.5, 1 \}.
+\end{eqnarray*}
+
+Since $ \lim_{n \to \infty} E[X(n)] = \lim_{n \to \infty} X(0) \cdot \mu^{n} = \infty $, we know that $ e_{1} \neq 1 $ and hence $ e_{1} = 0.5 $.
+\end{example}

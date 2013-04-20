@@ -1,0 +1,57 @@
+\section{Reversed Markov chain}
+
+\begin{observation}
+Reversed sequence of $ \mathbb{X} $ is also a Markov chain.
+\begin{proof}
+\begin{eqnarray*}
+&   & P(Y(n) = i_{0} \mid Y(n - 1) = i_{1}, \cdots, Y(n - k) = i_{k}) \\
+& = & P(X(m) = i_{0} \mid X(m + 1) = i_{1}, \cdots, X(m + k) = i_{k}) \\
+& = & \frac{P(X(m) = i_{0}, X(m + 1) = i_{1}, \cdots, X(m + k) = i_{k})}{P(X(m + 1) = i_{1}, \cdots, X(m + k) = i_{k})} \\
+& = & \frac{P(X(m) = i_{0}, X(m + 1) = i_{1}) \cdot P(X(m + 2) = i_{2}, \cdots, X(m + k) = i_{k} \mid X(m) = i_{0}, X(m + 1) = i_{1})}{P(X(m + 1) = i_{1}) \cdot P(X(m + 2) = i_{2}, \cdots, X(m + k) = i_{k} \mid X(m + 1) = i_{1})} \\
+& = & P(X(m) = i_{0} \mid X(m + 1) = i_{1}) \\
+& = & P(Y(n) = i_{0} \mid Y(n - 1) = i_{1}).
+\end{eqnarray*}
+\end{proof}
+\end{observation}
+
+\begin{observation} \label{obs:pi_i-q_ij-eq-pi_j-p_ji}
+Let $ \mathbb{Y} $ be the reversed sequence of $ \mathbb{X} $, and let $ \boldsymbol\pi $ be a stationary distribution of $ \mathbb{X} $. Then, for all $ i, j \in \mathcal{S} $,
+\[ \pi_{i} \cdot \mathbb{Q}[i, j] = \pi_{j} \cdot \mathbb{P}[j, i], \]
+where $ \mathbb{Q} $ is the transition matrix of $ \mathbb{Y} $.
+\begin{proof}
+Support $ \mathbb{X} $ is in the steady-state distribution $ \boldsymbol\pi $, and hence $ \mathbb{Y} $ is also in the steady-state distribution $ \boldsymbol\pi $ for all time indices $ t_{i} $. Then,
+\begin{eqnarray*}
+\pi_{i} \cdot \mathbb{Q}[i, j]
+  & = & P(Y(n - 1) = i) \cdot P(Y(n) = j \mid Y(n - 1) = i) \\
+  & = & P(Y(n - 1) = i, Y(n) = j) \\
+  & = & P(X(m + 1) = i, X(m) = j) \\
+  & = & P(X(m) = j) \cdot P(X(m + 1) = i \mid X(m) = j) \\
+  & = & \pi_{j} \cdot \mathbb{P}[j, i].
+\end{eqnarray*}
+\end{proof}
+\end{observation}
+
+\begin{observation}
+$ \mathbb{X}: \mathbb{P}, \mathbb{Y}: \mathbb{Q} $.
+If $ \boldsymbol\pi $ with $ \sum_{i \in \mathcal{S}} \pi_{i} = 1 $ satisfies $ \pi_{i} \cdot \mathbb{Q}[i, j] = \pi_{j} \cdot \mathbb{P}[j, i] $, then $ \mathbb{Y} $ is the reversed sequence of $ \mathbb{X} $.
+\begin{proof}
+For all $ i \in \mathcal{S} $,
+\begin{eqnarray*}
+\pi_{i}
+  & = & \pi_{i} \underbrace{\sum_{j \in \mathcal{S}} \mathbb{Q}[i, j]}_{= 1} \\
+  & = & \sum_{j \in \mathcal{S}} \pi_{i} \cdot \mathbb{Q}[i, j] \\
+  & = & \sum_{j \in \mathcal{S}} \pi_{j} \cdot \mathbb{P}[j, i].
+\end{eqnarray*}
+
+That is, $ \boldsymbol\pi = \boldsymbol\pi \mathbb{P} $ and hence $ \boldsymbol\pi $ is a stationary distribution of $ \mathbb{X} $. By \autoref{obs:pi_i-q_ij-eq-pi_j-p_ji}, the transition matrix of the reversed sequence of $ \mathbb{X} $, $ \hat{\mathbb{Q}} $ satisfies
+  \[ \hat{\mathbb{Q}}[i, j] = \frac{\pi_{j}}{\pi_i} \cdot \mathbb{P}[j, i] = \mathbb{Q}[i, j] \]
+for all $ i, j \in \mathcal{S} $.
+\end{proof}
+\end{observation}
+
+\begin{definition}
+If there exists a stationary distribution $ \boldsymbol\pi $ of $ \mathbb{X} $ such that
+\[ \pi_{i} \cdot \mathbb{Q}[i, j] = \pi_{j} \cdot \mathbb{P}[j, i] \]
+for all $ i, j \in \mathcal{S} $,
+then we say that $ \mathbb{Y} $ is a \defterm{reversed Markov chain} of $ \mathbb{X} $.
+\end{definition}

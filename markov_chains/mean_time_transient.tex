@@ -1,0 +1,110 @@
+\section{Mean Time Spent in Transient States}
+
+\begin{definition}
+For any states $ i $ and $ j $,
+\begin{itemize}
+  \item let $ s_{ij} $ denote the \defterm{excepted number of time indices} $ t \ge 0 $ with $ X(t) = j $ given $ X(0) = i $,
+  \item let $ f_{ij} $ be the probability $ P(\exists t \ge 1 . X(t) = j \mid X(0) = i) $.
+\end{itemize}
+
+\begin{comment}
+只需考慮 $ i \to j $ 且 $ i, j $ 都是 transient 的情況。
+
+\begin{itemize}
+  \item $ i \not\to j \Rightarrow s_{ij} = 0 $.
+  \item $ i \to j \wedge i \text{ is recurrent} \Rightarrow s_{ij} = \infty $. \\
+    ($ i \to j \wedge i \text{ is recurrent} \Rightarrow j \to i \Rightarrow j $ is recurrent.)
+  \item $ i \to j \wedge j \text{ is recurrent} \Rightarrow s_{ij} = \infty $. \\
+    (有 $ > 0 $ 的機率會回到 $ j $，且之後會一直回到 $ j $。)
+\end{itemize}
+\end{comment}
+\end{definition}
+
+\begin{theorem}
+Let $ \mathcal{T} $ consist of transient states of $ \mathbb{X} $, and $ \mathbb{P}_{\mathcal{T}} $ be the submatrix of $ \mathbb{P} $ induced by $ \mathcal{T} $. Then,
+\begin{eqnarray*}
+s_{ij} & = & (\mathbb{I} - \mathbb{P}_{\mathcal{T}})^{-1}[i, j], \\
+f_{ij} & = & \frac{s_{ij} - \delta_{ij}}{s_{jj}},
+\end{eqnarray*}
+where
+\[ \delta_{ij} = \begin{cases}
+  1 & \text{if } i = j, \\
+  0 & \text{otherwise}.
+\end{cases} \]
+
+\begin{proof}[proof ($ s_{ij} $)]
+If $ k $ is recurrent and hence $ k \in \mathcal{S} - \mathcal{T} $ then $ k \not\to j $ (since $ j $ is transient). Thus, $ s_{kj} = 0 $ and
+\begin{eqnarray*}
+s_{ij}
+  & = & \delta_{ij} + \sum_{k \in \mathcal{S}} \mathbb{P}[i, k] \cdot s_{kj} \\
+  & = & \delta_{ij} + \sum_{k \in \mathcal{T}} \mathbb{P}[i, k] \cdot s_{kj}. \\
+\end{eqnarray*}
+
+Let $ \mathbb{S}[i, j] = s_{ij} $,
+\begin{eqnarray*}
+  & & \mathbb{I}\,\mathbb{S} = \mathbb{S} = \mathbb{I} + \mathbb{P}_{\mathcal{T}} \mathbb{S} \\
+  & \Rightarrow & (\mathbb{I} - \mathbb{P}_{\mathcal{T}})\mathbb{S} = \mathbb{I} \\
+  & \Rightarrow & \mathbb{S} = (\mathbb{I} - \mathbb{P}_{\mathcal{T}})^{-1}.
+\end{eqnarray*}
+\end{proof}
+
+\begin{proof}[proof ($ f_{ij} $)]
+Conditioned on whether there exists an index $ t $ with $ X(t) = j $ (and $ j \not\in \{ X(1), \cdots, X(t - 1) \} $),
+$ s_{ij} = \sum_{t = 1}^{\infty} P(X(t) = j \mid X(0) = i) \cdot t $
+\begin{eqnarray*}
+  & & s_{ij} = \underbrace{\delta_{ij}}_{t = 0}  + \underbrace{s_{jj} \cdot f_{ij}}_{t \ge 1} \\
+  & \Rightarrow & f_{ij} = \frac{s_{ij} - \delta_{ij}}{s_{jj}}.
+\end{eqnarray*}
+\end{proof}
+\end{theorem}
+
+\begin{example}
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}[node distance=6em]
+  \node[state] (X0) {$ 0 $};
+  \foreach \x in {1,...,5}{
+    \pgfmathtruncatemacro{\y}{\x - 1}
+    \node[state] (X\x) [right of=X\y] {$ \x $};
+  }
+
+  \path (X0) edge [loop left] node {1} (X0)
+        (X1) edge [bend right=0] node [swap] {0.5} (X0)
+        (X4) edge [bend right=0] node {0.5} (X5)
+        (X5) edge [loop right] node {1} (X5);
+  \foreach \x in {2,...,4}{
+    \pgfmathtruncatemacro{\y}{\x - 1}
+    \path[<->] (X\y) edge [bend right=0] node {$ 0.5 $} (X\x);
+  }
+\end{tikzpicture}
+\end{figure}
+
+\begin{multicols}{2}
+\[ \mathbb{P} = \bordermatrix{
+    & 0 & 1 & 2 & 3 & 4 & 5 \cr
+  0 & 1 & 0 & 0 & 0 & 0 & 0 \cr
+  1 & \frac{1}{2} & 0 & \frac{1}{2} & 0 & 0 & 0 \cr
+  2 & 0 & \frac{1}{2} & 0 & \frac{1}{2} & 0 & 0 \cr
+  3 & 0 & 0 & \frac{1}{2} & 0 & \frac{1}{2} & 0 \cr
+  4 & 0 & 0 & 0 & \frac{1}{2} & 0 & \frac{1}{2} \cr
+  5 & 0 & 0 & 0 & 0 & 0 & 1 \cr
+} \]
+
+\null \vfill
+\null \vfill
+\begin{eqnarray*}
+\mathbb{S} = (\mathbb{I} - \mathbb{P}_{\mathcal{T}})^{-1} & = & \begin{pmatrix}
+  1.6 & 1.2 & 0.8 & 0.4 \\
+  1.2 & 2.4 & 1.6 & 0.8 \\
+  0.8 & 1.6 & 2.4 & 1.2 \\
+  0.4 & 0.8 & 1.2 & 1.6 \\
+\end{pmatrix} \\
+\mathbb{F} & = & \begin{pmatrix}
+  \frac{3}{8} & \frac{1}{2}     & \frac{1}{3}     & \frac{1}{4} \\
+  \frac{3}{4} & \frac{7}{12}  & \frac{19}{30}   & \frac{1}{2} \\
+  \frac{1}{2} & \frac{19}{30}   & \frac{7}{12}  & \frac{3}{4} \\
+  \frac{1}{4} & \frac{1}{3}     & \frac{1}{2}     & \frac{3}{8}
+\end{pmatrix}
+\end{eqnarray*}
+\end{multicols}
+\end{example}
