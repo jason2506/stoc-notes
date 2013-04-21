@@ -114,7 +114,10 @@ Assume that $ \boldsymbol\pi \neq \boldsymbol\pi \mathbb{P} $,
 \sum_{j \in \mathcal{S}} \pi_{j}
   & > & \sum_{j \in \mathcal{S}} \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j]
     \text{\hspace{1em} \small(by \autoref{ineq:pi-ge-pi-times-p})} \\
-  & = & \sum_{i \in \mathcal{S}} \pi_{i} \underbrace{\sum_{j \in \mathcal{S}} \mathbb{P}[i, j]}_{= 1} \\
+  & \ge & \sum_{i = 1}^{m} \pi_{i} \underbrace{\sum_{j \in \mathcal{S}} \mathbb{P}[i, j]}_{= 1} \\
+  & = & \sum_{i = 1}^{m} \pi_{i}, \\
+\underbrace{\lim_{m \to \infty} \sum_{j \in \mathcal{S}} \pi_{j}}_{= \sum_{j \in \mathcal{S}} \pi_{j}}
+  & > & \lim_{m \to \infty} \sum_{i = 1}^{m} \pi_{i} \\
   & = & \sum_{i \in \mathcal{S}} \pi_{i},
 \end{eqnarray*}
 contradiction.
@@ -241,6 +244,29 @@ Let $ \mathbb{R} = [\mathbf{r}^{\intercal}, \cdots, \mathbf{r}^{\intercal}]^{\in
   & = & \mathbb{R}.
 \end{eqnarray*}
 \end{proof}
+
+\begin{comment}
+\begin{eqnarray*}
+(\mathbb{R}\mathbb{P})[i, j]
+  & = & \sum_{k \in \mathcal{S}} r_{k} \cdot \mathbb{P}[k, j] \\
+  & = & \sum_{k \in \mathcal{S}} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k = 1}^{m} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & \le & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1}[i, j] \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1}[i, j],
+\end{eqnarray*}
+
+\begin{eqnarray*}
+(\mathbb{R}\mathbb{P})[i, j]
+  & = & \sum_{k \in \mathcal{S}} r_{k} \cdot \mathbb{P}[k, j] \\
+  & = & \sum_{k \in \mathcal{S}} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k = 1}^{m} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] \\
+  & \ge & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] - \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k > m} \mathbb{P}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \mathbb{P}^{t}[i, k] \cdot \mathbb{P}[k, j] - \lim_{m \to \infty} \sum_{k > m} \mathbb{P}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1}[i, j] - 0 \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t + 1}[i, j].
+\end{eqnarray*}
+\end{comment}
 \end{lemma}
 
 \begin{lemma} \label{lem:pi-eq-r}
@@ -258,6 +284,29 @@ Let $ \mathbb{R} = [\mathbf{r}^{\intercal}, \cdots, \mathbf{r}^{\intercal}]^{\in
   & = & \boldsymbol\pi.
 \end{eqnarray*}
 \end{proof}
+
+\begin{comment}
+\begin{eqnarray*}
+\left[ \boldsymbol\pi \cdot \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} \right) \right] [i, j]
+  & = & \sum_{k \in \mathcal{S}} \pi_{k} \cdot \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} \right) [k, j] \\
+  & = & \sum_{k \in \mathcal{S}} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k = 1}^{m} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & \le & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} (\boldsymbol\pi\mathbb{P}^{t}) [i, j] \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} (\boldsymbol\pi\mathbb{P}^{t}) [i, j],
+\end{eqnarray*}
+
+\begin{eqnarray*}
+\left[ \boldsymbol\pi \cdot \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} \right) \right] [i, j]
+  & = & \sum_{k \in \mathcal{S}} \pi_{k} \cdot \left( \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \mathbb{P}^{t} \right) [k, j] \\
+  & = & \sum_{k \in \mathcal{S}} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k = 1}^{m} \pi_{k} \cdot \mathbb{P}^{t}[k, j] \\
+  & \ge & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \pi_{k} \cdot \mathbb{P}^{t}[k, j] - \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k > m} \pi_{k} \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} \sum_{k \in \mathcal{S}} \pi_{k} \cdot \mathbb{P}^{t}[k, j] - \lim_{m \to \infty} \sum_{k > m} \pi_{k} \\
+  & = & \lim_{m \to \infty} \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} (\boldsymbol\pi\mathbb{P}^{t}) [i, j] - 0 \\
+  & = & \lim_{n \to \infty} \frac{1}{n} \sum_{t = 1}^{n} (\boldsymbol\pi\mathbb{P}^{t}) [i, j].
+\end{eqnarray*}
+\end{comment}
 \end{lemma}
 
 \begin{theorem}
