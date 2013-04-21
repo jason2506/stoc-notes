@@ -1,5 +1,10 @@
 \section{Convergence of Markov chain}
 
+% ===============================================
+%   Limiting Probability
+% ===============================================
+\subsection{Limiting Probability}
+
 \begin{definition}
 If $ \pi_{j} = \lim_{n \to \infty} \mathbb{P}^{n} [i, j] $ holds for all states $ i \in \mathcal{S} $, then $ \pi_{j} $ is the \defterm{limiting probability} of state $ j $.
 
@@ -10,23 +15,6 @@ If all states $ i $ have limiting probability, then
   \boldsymbol\pi \\ \vdots \\ \boldsymbol\pi
 \end{bmatrix}, \]
 where $ \boldsymbol\pi $ is the row vector $ (\pi_{1}, \pi_{2}, \cdots) $.
-\end{comment}
-\end{definition}
-
-\begin{definition}
-Non-negative row vector $ \boldsymbol\pi = (\pi_{1}, \pi_{2}, \cdots) $ with $ \sum_{i \in \mathcal{S}} \pi_{i} = 1 $ is called a \defterm{stationary distribution} or \defterm{steady-state distribution} of $ \mathbb{X} $ if $ \boldsymbol\pi \mathbb{P} = \boldsymbol\pi $ (normalized left eignvector with eignvalue $ 1 $).
-
-\begin{comment}
-Why ``steady-state''?
-
-If $ P(X(0) = i) = \pi_{i} $ for all $ i \in \mathcal{S} $, then
-\begin{eqnarray*}
-P(X(1) = i)
-  & = & \sum_{i \in \mathcal{S}} P(X(1) = j \mid X(0) = i) \cdot P(X(0) = i) \\
-  & = & \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j] \\
-  & = & \pi_{j},
-\end{eqnarray*}
-for all $ j \in \mathcal{S} $.
 \end{comment}
 \end{definition}
 
@@ -124,6 +112,28 @@ contradiction.
 \end{proof}
 \end{equality}
 
+% ===============================================
+%   Stationary Distribution
+% ===============================================
+\subsection{Stationary Distribution}
+
+\begin{definition}
+Non-negative row vector $ \boldsymbol\pi = (\pi_{1}, \pi_{2}, \cdots) $ with $ \sum_{i \in \mathcal{S}} \pi_{i} = 1 $ is called a \defterm{stationary distribution} or \defterm{steady-state distribution} of $ \mathbb{X} $ if $ \boldsymbol\pi \mathbb{P} = \boldsymbol\pi $ (normalized left eignvector with eignvalue $ 1 $).
+
+\begin{comment}
+Why ``steady-state''?
+
+If $ P(X(0) = i) = \pi_{i} $ for all $ i \in \mathcal{S} $, then
+\begin{eqnarray*}
+P(X(1) = i)
+  & = & \sum_{i \in \mathcal{S}} P(X(1) = j \mid X(0) = i) \cdot P(X(0) = i) \\
+  & = & \sum_{i \in \mathcal{S}} \pi_{i} \cdot \mathbb{P}[i, j] \\
+  & = & \pi_{j},
+\end{eqnarray*}
+for all $ j \in \mathcal{S} $.
+\end{comment}
+\end{definition}
+
 \begin{inequality} \label{ineq:p-ge-pi}
 If the limiting probability $ \pi_{i} $ exists for all $ i \in \mathcal{S} $ and $ \mathbf{p} $ is a stationary distribution of $ \mathbb{X} $, then $ p_{i} \ge \pi_{i} $ holds for all $ i \in \mathcal{S} $.
 
@@ -210,6 +220,11 @@ Since $ \mathbb{X} $ is irreducible, possitive recurrent, and aperiodic {\color{
 & \Rightarrow & \boldsymbol\pi = \left( \frac{\beta}{1 + \beta - \alpha}, \frac{1 - \alpha}{1 + \beta - \alpha} \right)
 \end{eqnarray*}
 \end{example}
+
+% ===============================================
+%   Long-run Proportion
+% ===============================================
+\subsection{Long-run Proportion}
 
 \begin{definition}
 $ r_{j} $ is the \defterm{long-run proportion} of state $ j $ if
