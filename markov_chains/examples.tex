@@ -45,6 +45,33 @@ Thus, $ f_{0} = \frac{1}{2} + \frac{f_{0}^{2}}{2} \Rightarrow (f_{0} - 1)^{2} = 
 
 \begin{exercise}
 The Markov chain $ \mathbb{X} $ with infinite states is transient if $ \mathbb{P}[i + 1, i] \neq 0.5 $ for all state $ i $. Why?
+
+\begin{solution}
+Let $ \mathbb{P}[i + 1, i] = p $, $ \alpha = P(\exists t \ge 1 . X(t) = 0 \mid X(0) = 1) $, and $ \beta = P(\exists t \ge 1 . X(t) = 0 \mid X(0) = -1) $. Then,
+\begin{alignat*}{2}
+  & \alpha
+    & \quad=\quad & P(\exists t \ge 1 . X(t) = 0 \mid X(0) = 1) \\
+  & & \quad=\quad & \sum_{n = 1}^{\infty} p^{n} \alpha^{n} (1 - p) \\
+  & & \quad=\quad & \frac{1 - p}{1 - p \cdot \alpha} \\
+\Rightarrow\quad
+  & \alpha
+    & \quad=\quad & \frac{1 - \sqrt{1 - 4p(1 - p)}}{2p}, \\
+  & \beta
+    & \quad=\quad & P(\exists t \ge 1 . X(t) = 0 \mid X(0) = 1) \\
+  & & \quad=\quad & \sum_{n = 1}^{\infty} (1 - p)^{n} \beta^{n} (p) \\
+  & & \quad=\quad & \frac{p}{1 - (1 - p) \cdot \beta} \\
+\Rightarrow\quad
+  & \beta
+    & \quad=\quad & \frac{1 - \sqrt{1 - 4p(1 - p)}}{2(1 - p)}. \\
+\end{alignat*}
+Thus, if $ p \neq 0.5 $ and hence $ 4p(1 - p) < 1 $, we get
+\begin{eqnarray*}
+f_{0}
+  & = & p \cdot \alpha + (1 - p) \cdot \beta \\
+  & = & 1 - \sqrt{1 - 4p(1 - p)} \\
+  & < & 1.
+\end{eqnarray*}
+\end{solution}
 \end{exercise}
 
 % ===============================================
