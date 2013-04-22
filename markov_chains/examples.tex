@@ -159,6 +159,16 @@ A special case of \nameref{subsec:gambler-ruin}, $ \mathbb{X}_{m} $, with $ m \t
 
 \begin{exercise}
 Show that $ p_{i} = 1 $ if $ q < 0.5 $.
+
+\begin{solution}
+Since $ q < 0.5 $ and hence $ r > 1 $, we know that $ r^{m} \gg r^{i} $ when $ m \to \infty $. Thus,
+\begin{eqnarray*}
+p_{i}
+  & = & \lim_{m \to \infty} \frac{s_{i - 1}}{s_{m - 1}} \\
+  & = & \lim_{m \to \infty} 1 - \frac{(1 - r^{i})}{(1 - r^{m})} \\
+  & = & 1.
+\end{eqnarray*}
+\end{solution}
 \end{exercise}
 
 % ===============================================
