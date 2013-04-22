@@ -29,8 +29,8 @@ Therefore,
 \begin{eqnarray*}
 E[T_{i} \mid X(0) = i]
   & = & \sum_{t = 0}^{\infty} E[T^{(t)}_{i} \mid X(0) = i] \\
-  & = & \sum_{t = 0}^{\infty} P[T^{(t)}_{i} = 1 \mid X(0) = i] \\
-  & = & \sum_{t = 0}^{\infty} P[X(t) = i \mid X(0) = i] \\
+  & = & \sum_{t = 0}^{\infty} P(T^{(t)}_{i} = 1 \mid X(0) = i) \\
+  & = & \sum_{t = 0}^{\infty} P(X(t) = i \mid X(0) = i) \\
   & = & \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i].
 \end{eqnarray*}
 \end{proof}
@@ -42,7 +42,7 @@ State $ i $ is recurrent iff $ \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i] = \inf
 \begin{eqnarray*}
 \sum_{t = 0}^{\infty} \mathbb{P}^{t}[i, i]
   & = & E[T_{i} \mid X(0) = i] \\
-  & = & \sum_{t = 0}^{\infty} k \cdot P(T_{i} = k \mid X(0) = i) \\
+  & = & \sum_{k = 0}^{\infty} k \cdot P(T_{i} = k \mid X(0) = i) \\
   & = & \infty.
 \end{eqnarray*}
 \end{proof}
