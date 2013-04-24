@@ -34,9 +34,9 @@ What's the probability of extinction?
           \item[Case 2-2] $ \mu \ge 1 $,
             \begin{eqnarray*}
               e_{i}
-                & = & \sum_{j = 0}^{m} P(\text{extinction} \mid X(0) = i) \cdot \mathbb{P}[i, j] \\
+                & = & \sum_{j = 0}^{m} P(\text{extinction} \mid X(1) = j) \cdot \mathbb{P}[i, j] \\
                 & = & \sum_{j = 0}^{m} e_{j} \cdot p_{j} \\
-                & = & \sum_{j = 0}^{m} e_{i}^{j} \cdot p_{j}.
+                & = & \sum_{j = 0}^{m} e_{1}^{j} \cdot p_{j}.
             \end{eqnarray*}
         \end{description}
     \end{itemize}
@@ -55,7 +55,7 @@ What's the probability of extinction?
 \begin{eqnarray*}
   & & p_{0} = p_{1} = 0.5, p_{2} = 0.25 \\
   & \Rightarrow & \mu = 1 \cdot 0.25 + 2 \cdot 0.5 = 1.25 \\
-  & \Rightarrow & e_{i} = 0.25 + 0.25 \cdot e_{1} + 0.5 \cdot e_{1}^{2} \\
+  & \Rightarrow & e_{1} = 0.25 + 0.25 \cdot e_{1} + 0.5 \cdot e_{1}^{2} \\
   & \Rightarrow & e_{1} \in \{ 0.5, 1 \}.
 \end{eqnarray*}
 

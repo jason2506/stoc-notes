@@ -234,7 +234,7 @@ holds for all states $ i \in \mathcal{S} $.
 \begin{comment}
 Why this name?
 
-Support $ N $ is a uniform distribution over $ \{ 1, \cdots, n \} $. The ``long-run proportion of state $ j $'' is
+Suppose $ N $ is a uniform distribution over $ \{ 1, \cdots, n \} $. The ``long-run proportion of state $ j $'' is
 \begin{eqnarray*}
   &   & \lim_{n \to \infty} P(X(N) = j \mid X(0) = i) \\
   & = & \lim_{n \to \infty} P(X(N) = j \mid N = t, X(0) = i) \cdot P(N = t \mid X(0) = i) \\
@@ -387,7 +387,7 @@ If $ \mathbb{X} $ is irreducible, the long-run proportion $ r_{i} $ of each stat
 \end{enumerate}
 
 \begin{proof}
-Support $ X(0) = i $. Let $ T_{k} $ be the number of transitions required for $ \mathbb{X} $ to go from the $ k $-th $ i $ to $ (k + 1) $-th $ i $. Therefore, $ T_{1}, T_{2}, \cdots $ are i.i.d. with expectation $ \mu_{i} $. According to LLN,
+Suppose $ X(0) = i $. Let $ T_{k} $ be the number of transitions required for $ \mathbb{X} $ to go from the $ k $-th $ i $ to $ (k + 1) $-th $ i $. Therefore, $ T_{1}, T_{2}, \cdots $ are i.i.d. with expectation $ \mu_{i} $. According to LLN,
 \[ P \Bigg( \underbrace{\lim_{k \to \infty} \frac{1}{k} \sum_{t = 1}^{k} T_{t}}_{= \frac{1}{r_{i}}} = \mu_{i} \Bigg) = 1. \]
 Thus, we get $ P \left( r_{i} = \frac{1}{\mu_{i}} \right) = 1 $ holds for all recurrent (both positive recurrent and null recurrent) state $ i $.
 
