@@ -51,14 +51,14 @@ Let $ \mathbb{P}[i + 1, i] = p $, $ \alpha = P(\exists t \ge 1 . X(t) = 0 \mid X
 \begin{alignat*}{2}
   & \alpha
     & \quad=\quad & P(\exists t \ge 1 . X(t) = 0 \mid X(0) = 1) \\
-  & & \quad=\quad & \sum_{n = 1}^{\infty} p^{n} \alpha^{n} (1 - p) \\
+  & & \quad=\quad & \sum_{n = 0}^{\infty} p^{n} \alpha^{n} (1 - p) \\
   & & \quad=\quad & \frac{1 - p}{1 - p \cdot \alpha} \\
 \Rightarrow\quad
   & \alpha
     & \quad=\quad & \frac{1 - \sqrt{1 - 4p(1 - p)}}{2p}, \\
   & \beta
-    & \quad=\quad & P(\exists t \ge 1 . X(t) = 0 \mid X(0) = 1) \\
-  & & \quad=\quad & \sum_{n = 1}^{\infty} (1 - p)^{n} \beta^{n} (p) \\
+    & \quad=\quad & P(\exists t \ge 1 . X(t) = 0 \mid X(0) = -1) \\
+  & & \quad=\quad & \sum_{n = 0}^{\infty} (1 - p)^{n} \beta^{n} (p) \\
   & & \quad=\quad & \frac{p}{1 - (1 - p) \cdot \beta} \\
 \Rightarrow\quad
   & \beta
