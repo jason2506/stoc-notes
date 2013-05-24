@@ -55,3 +55,72 @@ If there exists a stationary distribution $ \boldsymbol\pi $ of $ \mathbb{X} $ s
 for all $ i, j \in \mathcal{S} $,
 then we say that $ \mathbb{Y} $ is a \defterm{reversed Markov chain} of $ \mathbb{X} $.
 \end{definition}
+
+\begin{definition}
+$ \mathbb{X} $: $ \mathbb{P} $ is \defterm{time reversible} if there exists $ \boldsymbol\pi $ with $ \sum_{j \in \mathcal{S}} \pi_{j} = 1 $ such that
+\[ \pi_{i} \cdot \mathbb{P}[i, j] = \pi_{j} \cdot \mathbb{P}[j, i] \]
+for all $ i, j \in \mathcal{S} $.
+\end{definition}
+
+\begin{question}
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}
+  \node[state] (Xi-1)                             {$ i - 1 $};
+  \node[state] (Xi)   [right of=Xi-1]             {$ i $};
+  \node[state] (Xi+1) [right of=Xi]               {$ i + 1 $};
+  \node[state] (X0)   [left  of=Xi-1,xshift=-2em] {$ 0 $};
+  \node[state] (Xm)   [right of=Xi+1,xshift=2em]  {$ m $};
+
+  \path (X0) edge [loop left]     node [swap] {$ 1 - p_{0} $} (X0)
+        (Xi) edge [bend right=40] node [swap] {$ 1 - p_{i} $} (Xi-1)
+        (Xi) edge [bend left=40]  node        {$ p_{i} $} (Xi+1)
+        (Xm) edge [loop right]    node        {$ p_{m} $} (Xm);
+  \path[-] (X0) edge [loosely dotted,line width=.15em] (Xi-1)
+           (Xm) edge [loosely dotted,line width=.15em] (Xi+1);
+\end{tikzpicture}
+\[ 0 < p_{0} \le 1, ~ 0 \le p_{m} < 1, ~ 0 < p_{i} < 1 ~ \forall i = 2, \cdots, m - 1 \]
+\[ p_{i} = \frac{m - i}{m} \]
+\end{figure}
+
+Is the Markov chain above time-reversible?
+\begin{eqnarray*}
+\pi_{i}
+  & = & \prod_{j = 1}^{i} \frac{p_{j - 1}}{1 - p_{j}} \cdot \pi_{0} \\
+  & = & \frac{g_{i}}{1 + \sum_{i = 1}^{m} g_{i}} \\
+  & = & g_{i} \cdot \pi_{0} \\
+  & = & \frac{1}{2^{m}} \begin{pmatrix} m \\ i \end{pmatrix},
+\end{eqnarray*}
+where $ g_{i} = \begin{pmatrix} m \\ i \end{pmatrix} $.
+\end{question}
+
+\begin{question}
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}[node distance=6em]
+  \node[state] (X2)               {$ 2 $};
+  \node[state] (X1) [right of=X2] {$ 1 $};
+  \node[state] (X4) [right of=X1] {$ 4 $};
+  \node[state] (X5) [right of=X4] {$ 5 $};
+  \node[state] (X3) [right of=X5] {$ 3 $};
+
+  \path[-] (X2) edge [bend right=0] node {$ 3 $} (X1)
+           (X1) edge [bend right=0] node {$ 1 $} (X4)
+           (X4) edge [bend right=0] node {$ 4 $} (X5)
+           (X5) edge [bend right=0] node {$ 6 $} (X3)
+           (X1) edge [bend left=50] node {$ 2 $} (X5);
+\end{tikzpicture}
+\[ \mathbb{P}[i, j] = \frac{w_{ij}}{\sum_{k = 1}^{n} w_{ik}} \]
+\end{figure}
+
+What is the stationary distribution of $ \mathbb{X} $? Is $ \mathbb{X} $ time-reversible?
+\[ \pi_{i} = \frac{\sum_{k = 1}^{n} w_{ik}}{\sum_{l = 1}^{n} \sum_{k = 1}^{n} w_{lk}}. \]
+\begin{eqnarray*}
+\pi_{i} \mathbb{P}[i, j]
+  & = & \frac{w_{ij}}{\sum_{l = 1}^{n} \sum_{k = 1}^{n} w_{lk}} \\
+  & = & \frac{\sum_{k = 1}^{n} w_{jk}}{\sum_{l = 1}^{n} \sum_{k = 1}^{n} w_{lk}} \cdot \frac{w_{ji}}{\sum_{k = 1}^{n} w_{jk}} \\
+  & = & \pi_{j} \mathbb{P}[j, i].
+\end{eqnarray*}
+
+Thus, $ \mathbb{X} $ is time-reversible and $ \pi = (\frac{6}{32}, \frac{3}{32}, \frac{6}{32}, \frac{5}{32}, \frac{12}{32}) $.
+\end{question}
