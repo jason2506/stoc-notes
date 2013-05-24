@@ -1,0 +1,101 @@
+\section{Definition of Poisson Process}
+
+A continuous-time stochastic process
+\[ \mathbb{N} = \{ N(t) \mid t \ge 0 \} \]
+is a \defterm{counting process} if $ N(t) $ denotes the total number of ``events'' that occur by time $ t $.
+\begin{comment}
+$ N(t) $: non-negative integer, increases as $ t $ increases.
+\end{comment}
+
+\begin{definition}[\defterm{independent increments}] \label{def:independent}
+The number of events that occur in disjoint time intervals are independent.
+\end{definition}
+
+\begin{definition}[\defterm{stationary increments}] \label{def:stationary}
+The distribution of the number of events that occur in any interval of time depends only the length of the time interval.
+\end{definition}
+
+\begin{definition}[\defterm{Poisson process}]
+A \defterm*{poisson process} with rate $ \lambda $ is a counting process $ \mathbb{N} $ with $ N(0) = 0 $ possessing (a) independent increments and (b) stationary increments such that the number of events in any interval of length $ t $ is a poisson distribution with mean $ \lambda t $. That is,
+\[ P(N(t + s) - N(s) = n) = \frac{e^{-\lambda t} \cdot (\lambda t)^{n}}{n!}. \]
+\end{definition}
+
+\begin{theorem}[操作型定義] \label{thm:op_def}
+$ \mathbb{N} $ is a possion process iff $ \mathbb{N} $ possesses independent increments and stationary increments and the following two conditions for any $ t \ge 0 $ holds:
+\begin{enumerate}
+  \item $ P(N(t) = 1) = \lambda t + o(t) $,
+  \item $ P(N(t) \ge 2) = o(t) $,
+\end{enumerate}
+where a function $ f(t) $ is $ o(t) $ if $ \lim_{t \to 0} f(t) / t = 0 $.
+
+\begin{proof}[Proof (only if)]
+\begin{eqnarray*}
+P(N(t) = 1)
+  & = & e^{-\lambda t} \cdot (\lambda t) \\
+  & = & \lambda t \cdot \left( 1 - \frac{\lambda t}{1!} + \frac{\lambda t}{2!} - \frac{\lambda t}{3!} + \cdots \right) \\
+  & = & \lambda t + o(t), \\
+P(N(t) = 2)
+  & = & \frac{e^{-\lambda t} \cdot (\lambda t)^{2}}{2!} \\
+  & = & (\lambda t + o(t)) \cdot \frac{\lambda t}{2} \\
+  & = & o(t).
+\end{eqnarray*}
+\end{proof}
+
+\begin{proof}[Proof (if)]
+If $ X $ is Poisson distribution with parameter $ \lambda t $,
+\begin{alignat*}{3}
+\psi(u) & \quad=\quad & E[e^{ux}] & \quad=\quad & e^{\lambda t (e^{u} - 1)} & \quad\text{(moment generating function)} \\
+\phi(u) & \quad=\quad & E[e^{-ux}] & \quad=\quad & e^{\lambda t (e^{-u} - 1)} & \quad\text{(Laplace transform)}
+\end{alignat*}
+
+Define $ \phi_{u}(t) = E[e^{-uN(t)}] $ is the Laplace transform of $ N(t) $ that satisfies conditions 1 \& 2.
+\begin{eqnarray*}
+\phi_{u}(s + t)
+  & = & E[e^{-uN(s + t)}] \\
+  & = & E[e^{-uN(s)} \cdot e^{-u(N(s + t) - N(s))}] \\
+  & = & E[e^{-uN(s)}] \cdot E[e^{-u(N(s + t) - N(s))}] \\
+  & = & E[e^{-uN(s)}] \cdot E[e^{-uN(t)}] \\
+  & = & \phi_{u}(s) \cdot \phi_{u}(t).
+\end{eqnarray*}
+
+By conditions 1 \& 2, we have
+\[ P(N(t) = 0) = 1 - \lambda t + o(t). \]
+
+Therefore,
+\begin{eqnarray*}
+\phi_{u}(t)
+  & = & E[e^{-uN(t)}] \\
+  & = & \sum_{n = 0}^{\infty} e^{-un} \cdot P(N(t) = n) \\
+  & = & (1 - \lambda t + o(t)) + (\lambda t + o(t)) + o(t) + o(t) + \cdots \\
+  & = & 1 + (e^{-u} - 1) \cdot \lambda t + o(t).
+\end{eqnarray*}
+
+Thus,
+\begin{eqnarray*}
+\phi_{u}(s + t)
+  & = & \phi_{u}(s) \cdot \phi_{u}(t) \\
+  & = & \phi_{u}(s) \cdot [1 + (e^{-u} - 1) \cdot \lambda t + o(t)].
+\end{eqnarray*}
+
+That is,
+\begin{eqnarray*}
+\phi_{u}'(s)
+  & = & \lim_{t \to 0} \frac{\phi_{u}(s + t) - \phi_{u}(s)}{t} \\
+  & = & \phi_{u}(s) \cdot (e^{-u} - 1) \cdot \lambda + \lim_{t \to 0} \frac{o(t)}{t} \\
+  & = & \phi_{u}(s) \cdot (e^{-u} - 1) \cdot \lambda, \\
+\frac{\phi_{u}'(s)}{\phi_{u}(s)}
+  & = & (e^{-u} - 1) \cdot \lambda.
+\end{eqnarray*}
+and hence
+\[ \ln \phi_{u}(s) = \int [(e^{-u} - 1) \cdot \lambda] \mathrm{d} s = (e^{-u} - 1) \cdot \lambda s + C. \]
+In addition, since $ \phi_{u}(0) = 1 $, we get $ C = 0 $ and hence $ \phi_{u}(s) = e^{(e^{-u} - 1) \cdot \lambda s} $
+\end{proof}
+\end{theorem}
+
+\begin{exercise}
+利用 \autoref{thm:op_def} 證明
+\begin{enumerate}
+  \item If $ \mathbb{N}_{1} $ is a Poisson process with rate $ \lambda_{1} $, and $ \mathbb{N}_{2} $ is a Poisson process with rate $ \lambda_{2} $, then $ \mathbb{N}_{1} \cup \mathbb{N}_{2} $ is a Poisson process with rate $ \lambda_{1} + \lambda_{2} $.
+  \item If $ X $ is a Poisson distribution with parameter $ \lambda_{1} $, and $ Y $ is a Poisson distribution with parameter $ \lambda_{2} $ ($ X $ and $ Y $ are independent), then $ X+Y $ is a Poisson distribution with parameter $ \lambda_{1} + \lambda_{2} $.
+\end{enumerate}
+\end{exercise}
