@@ -1,0 +1,62 @@
+\section{Inter-arrival and Waiting Time}
+
+\begin{definition}[\defterm{inter-arrival time}]
+For each $ k > 1 $, the $ k $-th \defterm{inter-arrival time} $ T_{k} $ of a Poisson process $ \mathbb{N} $ is the time between the arrival times of $ (k - 1) $-th and $ k $-th events.
+\end{definition}
+
+\begin{observation} \label{obs:exp_with_lambda}
+If the rate of $ \mathbb{N} $ is $ \lambda $, then $ \mathbb{T} = T_{1}, T_{2}, \cdots $ is the infinite sequence of i.i.d. exponential random variables with parameter $ \lambda $.
+
+\begin{proof}
+Observe that $ T_{1} > s $ iff $ N(s) = 0 $. Let $ F_{1}(s) $ be the distribution function of $ T_{i} $,
+\begin{eqnarray*}
+F_{1}(s)
+  & = & P(T_{1} \le s) \\
+  & = & 1 - P(T_{1} > s) \\
+  & = & 1 - P(N(s) - N(0) = 0) \\
+  & = & 1 - P(N(s) = 0) \\
+  & = & 1 - e^{-\lambda s}.
+\end{eqnarray*}
+Thus, $ T_{1} $ is exponential with $ \lambda $.
+
+\begin{eqnarray*}
+P(T_{2} > t \mid T_{1} = s)
+  & = & P(N(s) = N(s + t) \mid T_{1} = s) \\
+  & = & P(N(s) = N(s + t)) \text{ (by \nameref{def:independent})} \\
+  & = & P(N(t) = 0) \text{ (by \nameref{def:stationary})} \\
+  & = & e^{-\lambda t}.
+\end{eqnarray*}
+Thus, $ T_{2} $ is exponential with $ \lambda $, and independent with $ T_{1} $.
+\end{proof}
+\end{observation}
+
+\begin{observation}
+The \keyterm{wating time} $ S_{k} = T_{1} + \cdots + T_{k} $ of the $ k $-th event is Gamma/Urlang with parameter $(k, \lambda) $.
+\begin{proof}
+Immedate from \autoref{obs:exp_with_lambda}. The probability density of $ S_{k} $ is given by
+\[ f(t) = \lambda e^{-\lambda t} \cdot \frac{(\lambda t)^{k - 1}}{(k - 1)!}. \]
+\end{proof}
+
+\begin{verification}
+\begin{eqnarray*}
+P(s_{k} \le t)
+  & = & P(N(t) \ge k) \\
+  & = & \sum_{i \ge k} P(N(t) = i) \\
+  & = & \sum_{i \ge k} \frac{(\lambda t)^{i} \cdot e^{-\lambda t}}{i!}, \\
+\frac{\mathrm{d}}{\mathrm{d} t} P(s_{k} \le t)
+  & = & \sum_{i \ge k} \lambda \cdot \frac{(\lambda t)^{i - 1} \cdot e^{-\lambda t}}{i!} - \sum_{i \ge k} \lambda \cdot \frac{(\lambda t)^{i} \cdot e^{-\lambda t}}{i!} \\
+  & = & \frac{\lambda e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!}.
+\end{eqnarray*}
+\end{verification}
+
+\begin{verification}
+\begin{eqnarray*}
+\lim_{h \to 0} P(t < s_{k} < t + h)
+  & = & \lim_{h \to 0} P(N(t) = k - 1, N(t + h) - N(t) \ge 1) \\
+  & = & \lim_{h \to 0} P(N(t) = k - 1) \cdot P(N(t + h) - N(t) \ge 1) \\
+  & = & \lim_{h \to 0} \frac{e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!} \cdot (\lambda h + o(t)).
+\end{eqnarray*}
+The density function of $ S_{k} $ is
+\[ f(t) = \lim_{h \to 0} \frac{1}{h} P(t < s_{k} < t + h) = \frac{\lambda e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!}. \]
+\end{verification}
+\end{observation}
