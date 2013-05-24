@@ -124,3 +124,57 @@ What is the stationary distribution of $ \mathbb{X} $? Is $ \mathbb{X} $ time-re
 
 Thus, $ \mathbb{X} $ is time-reversible and $ \pi = (\frac{6}{32}, \frac{3}{32}, \frac{6}{32}, \frac{5}{32}, \frac{12}{32}) $.
 \end{question}
+
+\subsection{Hastings-Metropolis Sampling Algorithm}
+Given a random variable $ X $ with probability mass function $ P(\cdot) $ compute an irreducible (finite) Markov chain $ \mathbb{X} $ such that the unique long-run proportion vector equals the probability distribution of $ X $. That is,
+\[ \lim_{n \to \infty} \frac{1}{n} \sum_{i = 1}^{n} X(i) = \sum_{i \in \mathcal{S}} i \underbrace{\cdot P(X = i)}_{= r_{i}} = E[X]. \]
+
+We only need to know $ b_{i} $ for all $ i \in \mathcal{S} $ such that $ P(X = i) = b_{i} / C $ where $ C $ is a unknown (or intractible) constant.
+
+\subsubsection{Mathematical definition of $ \mathbb{X} : \mathbb{P} $}
+\begin{enumerate}
+  \item Let $ \mathbb{Q} $ be the transition matrix of an arbitrary irreducible Markov chain over the same space of $ \mathbb{X} $ (This is what we have to ``design'').
+  \item Probability $ g(i, j) $ for any two states $ i, j \in \mathcal{S} $ is to be determined later (This depends on $ \mathbb{Q} $ and $ \boldsymbol\pi $).
+\end{enumerate}
+\begin{eqnarray*}
+\mathbb{P}[i, j] & = &
+  \begin{cases}
+    \mathbb{Q}[i, j] \cdot q(i, j)                        & i \neq j, \\
+    \mathbb{Q}[i, j] \cdot (1 - \sum_{i \neq k} q(i, k))  & i = j,
+  \end{cases} \\
+q(i, j) & = & \min \left\{ \frac{b_{j} \cdot \mathbb{Q}[j, i]}{b_{i} \cdot \mathbb{Q}[i, j]}, 1 \right\}.
+\end{eqnarray*}
+
+\subsubsection{Algorithmic definition of $ \mathbb{X} : \mathbb{P} $}
+\begin{itemize}
+  \item \textbf{Repeat for} $ n = 0, 1, \cdots $
+    \begin{description}
+      \item[Step 1.] Let $ i = X(n) $. \\
+        Set $ Y_{n} $ according to the probability specified by the $ i $-th row of $ \mathbb{Q} $. \\
+        That is, $ P(Y_{n} = j) = \mathbb{Q}[i, j] $ for all $ j \in \mathcal{S} $.
+      \item[Step 2.] Let $ j = Y(n) $. \\
+        Set $ X(n + 1) $ to be $ j $ with probability $ q(i, j) $, and to be $ i $ with probability $ 1 - q(i, j) $.
+    \end{description}
+\end{itemize}
+
+\begin{example}
+Let $ \mathcal{S} $ be the state space consisting of the permutations $ \mathbf{x} = (x_{1}, \cdots, x_{m}) $ over $ \{ 1, \cdots, n \} $ with $ \sum_{i \in \mathcal{S}} i \cdot x_{i} \ge n^{3} / 4 $. The objective is to generate uniform random samples over $ \mathcal{S} $. That is, for each $ \mathbf{x} \in \mathcal{S} $ and each $ t $, we except $ P(X(t) = \mathbf{x}) = 1 / |\mathcal{S}| $ ($ \forall \mathbf{x} \in \mathcal{S}. b_{\mathbf{x}} = 1 $, $ C = |\mathcal{S}| $).
+
+To make $ \mathbb{X} $ time-reversible with $ \boldsymbol\pi $ being its unique stationary distribution, it suffices to design (from $ \mathbb{Q} $) the matrix $ q $ such that
+\[ \pi_{i} \cdot \mathbb{P}[i, j] = \pi_{j} \cdot \mathbb{P}[j, i] \]
+holds for all $ i \neq j $. That is,
+\[ \frac{b_{i}}{C} \cdot \mathbb{Q}[i, j] \cdot q(i, j) = \frac{b_{j}}{C} \cdot \mathbb{Q}[j, i] \cdot q(j, i). \]
+
+\begin{description}
+  \item[Case 1.]
+    \[ \frac{b_{j} \cdot \mathbb{Q}[j, i]}{b_{i} \cdot \mathbb{Q}[i, j]} \ge 1
+      \Rightarrow q(i, j) = 1, q(j, i) = \frac{b_{i} \cdot \mathbb{Q}[i, j]}{b_{j} \cdot \mathbb{Q}[j, i]}. \]
+  \item[Case 2.]
+    \[ \frac{b_{j} \cdot \mathbb{Q}[j, i]}{b_{i} \cdot \mathbb{Q}[i, j]} < 1,
+      \Rightarrow q(i, j) = \frac{b_{j} \cdot \mathbb{Q}[j, i]}{b_{i} \cdot \mathbb{Q}[i, j]}, q(j, i) = 1. \]
+\end{description}
+
+For any two states $ \mathbf{x} $ and $ \mathbf{y} $ in $ \mathcal{S} $, that can be obtained from each other via one swap of adjacent elements, let
+\[ \mathbb{Q}[\mathbf{x}, \mathbf{y}] = \frac{1}{N(\mathbf{x})}, \]
+where $ N(\mathbf{x}) $ is the number of permutations in $ \mathcal{S} $ that can be obtained from $ \mathbf{x} $ via one swap of adjacent elements.
+\end{example}
