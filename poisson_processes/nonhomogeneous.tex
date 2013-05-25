@@ -1,0 +1,77 @@
+\section{Non-homogeneous Poisson Processes}
+
+\begin{definition}[\defterm{non-homogeneous Poisson process}]
+A counting process $ \mathbb{N} $ is a \defterm*{non-homogeneous Poisson process} with \keyterm{intensity function} $\lambda(\cdot) $ if the following conditions holds:
+\begin{enumerate}
+  \item $ N(0) = 0 $,
+  \item $ N $ possesses independent increments,
+  \item $ P(N(t + h) - N(t) \ge 2) = o(h) $, and
+  \item $ P(N(t + h) - N(t) = 1) = \lambda(t) \cdot h + o(h) $.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition} \label{pro:home_to_non-home}
+Let $ \mathbb{N} $ be an ordinary Poisson process with rate $ \lambda $. Suppose that each arrived event has the independent sampling probability $ p_{i}(t) $ to be type $ i $ at time $ t $. The counting process $ \mathbb{N}_{i} $ is a non-homogeneous Poisson process with intensity function $ \lambda(t) = \lambda \cdot p_{i}(t) $. Moreover $ \mathbb{N}_{1}, \mathbb{N}_{2}, \cdots $ are independent.
+\begin{proof}
+``Moreover'' 的部份已得證。
+\begin{itemize}
+\item \textbf{Condition 1:} trivial.
+\item \textbf{Condition 2:} immedate from independent increments of $ \mathbb{N} $.
+
+\item \textbf{Condition 3:}
+\[ P(N_{i}(t + h) - N_{i}(t) \ge 2) \le P(N(t + h) - N(t) \ge 2) = o(h). \]
+
+\item \textbf{Condition 4:}
+\begin{eqnarray*}
+  &   & P(N_{i}(t + h) - N_{i}(t) = 1) \\
+  & = & P(N_{i}(t + h) - N_{i}(t) = 1 \mid N(t + h) - N(t) = 1) \cdot P(N(t + h) - N(t) = 1) \\
+  &   & + P(N_{i}(t + h) - N_{i}(t) = 1 \mid N(t + h) - N(t) \ge 2) \cdot \underbrace{P(N(t + h) - N(t) \ge 2)}_{= o(h)} \\
+  & = & P(N_{i}(t + h) - N_{i}(t) = 1 \mid N(t + h) - N(t) = 1) \cdot (\lambda h + o(h)) + o(h) \\
+  & {\color{red} =} & \left( p_{i}(t) + \frac{o(h)}{h} \right) \cdot (\lambda h + o(h)) + o(h) \\
+  & = & p_{i}(t) \cdot \lambda h + o(h).
+\end{eqnarray*}
+\end{itemize}
+\end{proof}
+
+\begin{comment}
+\begin{eqnarray*}
+  && \lim_{h \to 0} P(N_{i}(t + h) - N_{i}(t) = 1 \mid N(t + h) - N(t) = 1) = p_{i}(t) \\
+  & \Rightarrow & P(N_{i}(t + h) - N_{i}(t) = 1 \mid N(t + h) - N(t) = 1) = p_{i}(t) + \frac{o(h)}{h}.
+\end{eqnarray*}
+\end{comment}
+\end{proposition}
+
+\begin{proposition}
+Each non-homogeneous Poisson process with a bounded intensity function can be obtained from \autoref{pro:home_to_non-home}.
+\begin{proof}
+Suppose that $ \lambda(t) \le \lambda $ for all $ t $.
+
+Let $ \mathbb{H} $ be a homogeneous Poisson with rate $ \lambda $. We then apply sampling probability $ \eta_{1}(t) = \frac{\lambda(t)}{\lambda} $ on $ \mathbb{H} $. By \autoref{pro:home_to_non-home}, we know that the sampling process is indeed the required non-homogeneous $ \mathbb{N} $ with intensity function $ \lambda(\cdot) $.
+\end{proof}
+\end{proposition}
+
+\begin{question}
+What is the number of events in time interval $ (s, s + t) $ in a non-homegeneous Poisson process $ \mathbb{N} $ with intensity function $ \lambda(\cdot) $, which is bounded in $ (s, s + t) $?
+
+Suppose that $ P(\cdot) = \lambda(\cdot) / \lambda $ is the sampling probability function to obtin $ \mathbb{N} $ from $ \mathbb{H} $. By \autoref{cor:ext_cor}, the number of $ \mathbb{N} $ by time $ t $ is a Poisson distribution with parameter
+\[ \lambda \cdot \int_{s}^{s + t} P(x) \mathrm{d}x = \int_{s}^{s + t} \lambda(x) \mathrm{d}x. \]
+\end{question}
+
+\begin{example}
+Suppose that
+\[ \lambda(t) =
+  \begin{cases}
+    0               & 0 \le t \le 8, \\
+    5 + 5(t - 8)    & 8 \le t \le 11, \\
+    20              & 11 \le t \le 13, \\
+    20 - 2(t - 13)  & 13 \le t \le 17, \\
+    0               & 17 \le t \le 24.
+  \end{cases} \]
+What is the probability that nobody comes during 8:30 - 9:30?
+
+Poisson distribution with parameter
+\[ \int_{8.5}^{9.5} (5 + 5(t - 8)) \mathrm{d}t = 10. \]
+
+Thus,
+\[ P(N = 0) = \frac{10^{0} \cdot e^{-10}}{0!} = e^{-10}. \]
+\end{example}
