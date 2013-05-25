@@ -22,8 +22,8 @@ Thus, $ T_{1} $ is exponential with $ \lambda $.
 \begin{eqnarray*}
 P(T_{2} > t \mid T_{1} = s)
   & = & P(N(s) = N(s + t) \mid T_{1} = s) \\
-  & = & P(N(s) = N(s + t)) \text{ (by \nameref{def:independent})} \\
-  & = & P(N(t) = 0) \text{ (by \nameref{def:stationary})} \\
+  & = & P(N(s) = N(s + t)) \text{ (by stationary increments)} \\
+  & = & P(N(t) = 0) \text{ (by stationary increments)} \\
   & = & e^{-\lambda t}.
 \end{eqnarray*}
 Thus, $ T_{2} $ is exponential with $ \lambda $, and independent with $ T_{1} $.
