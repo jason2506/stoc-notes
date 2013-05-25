@@ -1,0 +1,301 @@
+\section{Properties of Poisson Processes}
+
+\begin{properity}
+Let $ \mathbb{N} $ be a Poisson process with rate $ \lambda $. If each arrived event is of type 1 with probability $ p $, then the arrival of type 1 events is a Poisson process with rate $ \lambda p $.
+\begin{proof}
+Let $ \mathbb{N}_{1} $ be the arrival of the type 1 events.
+
+\begin{enumerate}
+\item $ \mathbb{N}_{1} $ possesses stationary increments:
+\[ P(N_{1}(s + t) - N_{1}(s) = k_{1} \mid N(s + t) - N(s) = k) = {{k}\choose{k_{1}}} p^{k_{1}} (1 - p)^{k - k_{1}}. \]
+Thus,
+\[ P(N_{1}(s + t) - N_{1}(s) = k) = \sum_{k = 0}^{\infty} {{k}\choose{k_{1}}} p^{k_{1}} (1 - p)^{k - k_{1}} \cdot \frac{(\lambda t)^{k} \cdot e^{-\lambda t}}{k!}. \]
+It depends only on the length $ t $ of the interval, not affected by $ s $ or the number of the number of events in other non-overlapping intervals.
+
+\item $ \mathbb{N}_{1} $ possesses independent increments: \\
+Let $ n(s, t) = N(s + t) - N(s) $ and $ n_{1}(s, t) = N_{1}(s + t) - N_{1}(s) $,
+\begin{eqnarray*}
+  &   & P(n_{1}(s, t) = k_{1}, n_{1}(u, v) = l_{1}) \\
+  & = & \sum_{k = 0}^{\infty} \sum_{l = 0}^{\infty} P(n_{1}(s, t) = k_{1}, n_{1}(u, v) = l_{1} \mid n(s, t) = k, n(u, v) = l) \cdot P(n(s, t) = k, n(u, v) = l) \\
+  & = & \sum_{k = 0}^{\infty} \sum_{l = 0}^{\infty} {{k}\choose{k_{1}}} p^{k_{1}} (1 - p)^{k - k_{1}} \cdot {{l}\choose{l_{1}}} p^{l_{1}} (1 - p)^{l - l_{1}} \cdot P(n(s, t) = k) \cdot P(n(u, v) = l) \\
+  & = & \sum_{k = 0}^{\infty} {{k}\choose{k_{1}}} p^{k_{1}} (1 - p)^{k - k_{1}} \cdot P(n(s, t) = k) \cdot \sum_{l = 0}^{\infty} {{l}\choose{l_{1}}} p^{l_{1}} (1 - p)^{l - l_{1}} \cdot P(n(u, v) = l) \\
+  & = & P(n_{1}(s, t) = k_{1}) \cdot P(n_{1}(u, v) = l_{1}).
+\end{eqnarray*}
+
+\item Conditions 1 \& 2 holds:
+\begin{eqnarray*}
+P(N_{1}(t) = 1)
+  & = & P(N_{1}(t) = 1 \mid N(t) = 1) \cdot P(N(t) = 1) + P(N_{1}(t) = 1 \mid N(t) \ge 2) \cdot P(N(t) \ge 2) \\
+  & = & p \cdot (\lambda t + o(t)) + o(t) \\
+  & = & \lambda pt + o(t), \\
+P(N_{1}(t) \ge 2)
+  & \le & P(N(t) \ge 2) \\
+  & = & o(t).
+\end{eqnarray*}
+\end{enumerate}
+\end{proof}
+\end{properity}
+
+\begin{properity}
+Let $ \mathbb{N} $ be a Poisson process with rate $ \lambda $. If the arrived event is either of type 1 (with probability $ p $) or type 2 (with probability $ 1 - p $), then the arrival of type 1 events ($ \mathbb{N}_{1} $) and type 2 ($ \mathbb{N}_{2} $) are independent.
+\begin{proof}
+\begin{eqnarray*}
+P(N_{1}(t) = i, N_{2}(t) = j)
+  & = & P(N_{1}(t) = i, N_{2}(t) = j \mid N(t) = i + j) \cdot P(N(t) = i + j) \\
+  & = & {{i + j}\choose{i}} p^{i} (1 - p)^{j} \cdot \frac{e^{-\lambda t} \cdot (\lambda t)^{i + j}}{(i + j)!} \\
+  & = & \frac{e^{-\lambda p t} \cdot (\lambda p t)^{i}}{i!} \cdot \frac{e^{-\lambda (1 - p) t} \cdot (\lambda (1 - p) t)^{j}}{j!} \\
+  & = & P(N_{1}(t) = i) \cdot P(N_{2}(t) = j).
+\end{eqnarray*}
+\end{proof}
+\end{properity}
+
+\begin{example}
+$ \mathbb{N} $: rate 10, type 1 sampling probability $ 1 / 12 $.
+Probability that no type 1 events in any interval of 4 time units is
+\[ P(N_{1}(4) = 0) = \frac{e^{-4 \cdot 10 \cdot (1 / 12)}}{0!} = e^{-\frac{10}{3}}. \]
+\end{example}
+
+\begin{example}
+There are $ r $ types of particles. Let $ X_{i}(t) $ be the number of type $ i $ particles at time $ t $, $ \mathbb{P}[i, j] $ the transition probability from type $ i $ to type $ j $ at 1 time units. What is $ X_{i}(t) $ if $ X_{i}(0) $ is a Poisson distribution with parameter $ \lambda_{i} $?
+
+$ X_{i}(t) $ is a Poisson distribution with parameter $ \sum_{k = 1}^{r} \lambda_{k}\mathbb{P}^{t}[k, i]. $
+\begin{comment}
+$ \lambda_{k}\mathbb{P}^{t}[k, i] $ 為時間 0 為 type $ k $，到時間 $ t $ 變成 type $ i $ 的個數（是一個 Poisson distribution）的參數。
+\end{comment}
+\end{example}
+
+\begin{example}
+題目好長懶得抄。
+
+The probability of each offer being accepted is
+\[ P(y) = P(X \ge y) = \int_{y}^{\infty} f(x) \mathrm{d}x. \]
+
+The excepted payoff
+\begin{eqnarray*}
+E[\text{accepted offer}] - E[\text{cost}]
+  & = & \int_{0}^{\infty} xf_{X \mid X \ge y}(x) \mathrm{d}x - \frac{C}{\lambda \cdot P(y)} \\
+  & = & \int_{y}^{\infty} x \cdot \frac{f(x)}{P(X \ge y)} \mathrm{d}x - \frac{C}{\lambda \cdot P(y)} \\
+  & = & \frac{1}{P(y)} \left( \int_{y}^{\infty} xf(x) \mathrm{d}x - \frac{C}{\lambda} \right).
+\end{eqnarray*}
+\end{example}
+
+\begin{example}
+For each $ u = 1 \cdots, r $, let $ p_{i} $ be the probability of getting a coupon of type $ i $. What is the excepted number $ E[C] $ of conpons to be collected so that all $ r $ types of coupons are collected?
+
+\begin{itemize}
+\item \textbf{First attempt:}
+\begin{eqnarray*}
+P(C \le n)
+  & = & P(\max_{i} c_{i} \le n) \\
+  & = & P(c_{1} \le n, \cdots, c_{r} \le n) \\
+  & \neq & \prod_{i = 1}^{r} P(c_{i} \le n).
+\end{eqnarray*}
+
+\item \textbf{Second attempt:} \\
+Suppose that the coupons are collected in a Poisson process with rate 1. So now we have $ r $ independent Poisson process $ \mathbb{N}_{i} $, which is the process of collecting type $ i $ coupons. That is, $ \mathbb{N}_{i} $ is a Poisson process with rate $ p_{i} $, and $ \mathbb{N}_{1}, \cdots, \mathbb{N}_{r} $ are independent.
+
+Let $ x_{i} $ be the time of receiving the first type $ i $ coupon, $ i = 1, \cdots, r $, and $ X = \max_{1 \le i \le r} x_{i} $ the time that all $ r $ types of coupons are collected.
+\begin{eqnarray*}
+P(X \le t)
+  & = & P(\max_{1 \le i \le r} x_{i} \le t) \\
+  & = & P(x_{1} \le t, \cdots, x_{r} \le t) \\
+  & = & \prod_{i = 1}^{r} P(x_{i} \le t),
+\end{eqnarray*}
+and hence
+\begin{eqnarray*}
+E[X]
+  & = & \int_{0}^{\infty} P(X > t) \mathrm{d}t \\
+  & = & \int_{0}^{\infty} \left[ 1 - \prod_{i = 1}^{r} (1 - e^{-tp_{i}}) \right] \mathrm{d}t.
+\end{eqnarray*}
+
+\item \textbf{Surprise!!} E[C] = E[X].
+\begin{eqnarray*}
+  &   & X = \sum_{j = 1}^{C} T_{j} \\
+  & \Rightarrow & E[X \mid C = c] = E \left[ \sum_{j = 1}^{c} T_{j} \right] = c \cdot E[T_{j}] = c \\
+  & \Rightarrow & E[X \mid C] = C \\
+  & \Rightarrow & E[X] = E[E[X \mid C]] = E[C].
+\end{eqnarray*}
+\end{itemize}
+\end{example}
+
+\begin{properity}
+Given that exactly one event of a Poisson process arrives in the time interval $ [0, t] $, this arrival time is uniform over $ [0, t] $.
+\begin{proof}
+Let $ T_{1} $ be the first inter-arrival time. For any $ s $ with $ 0 \le s \le t $,
+\begin{eqnarray*}
+P(T_{1} \le s \mid N(t) = 1)
+  & = & \frac{P(T_{1} \le s, N(t) = 1)}{P(N(t) = 1)} \\
+  & = & \frac{P(T_{1} \le s) \cdot P(N(t) - N(s) = 0)}{P(N(t) = 1)} \\
+  & = & \frac{P(e^{-\lambda t} \lambda s) \cdot e^{-\lambda(\lambda - s)}}{e^{-\lambda t} \lambda t} \\
+  & = & \frac{s}{t}.
+\end{eqnarray*}
+\end{proof}
+\end{properity}
+
+\begin{corollary}[推廣]
+Given that exactly $ n $ events of a Poisson process arrive in $ [0, t] $, what is the joint density of the $ n $ arrival times.
+
+For any $ 0 < x_{i} < \cdots < x_{n} < t $, the event that the $ i $-th event arrives at time $ x_{i} $, $ i = 1, \cdots, n $, and that there are exactly $ n $ events in $ [0, t] $ is equivent to
+\begin{eqnarray*}
+T_{1} & = & x_{1} \\
+T_{2} & = & x_{2} - x_{1} \\
+& \vdots & \\
+T_{n} & = & x_{n} - x_{n - 1} \\
+T_{n + 1} & > & t - x_{n}
+\end{eqnarray*}
+
+The conditional joint density of the ``sorted'' arrival time is
+\begin{eqnarray*}
+  &   & f(x_{1}, \cdots, x_{n} \mid N(t) = n) \\
+  & = & \frac{f(x_{1}, \cdots, x_{n} \mid N(t) = n, n)}{P(N(t) = n)} \\
+  & = & \frac{\lambda e^{-\lambda x_{1}} \cdot \lambda e^{-\lambda (x_{2} - x_{1})} \cdot .... \cdot e^{-\lambda (x_{n} - x_{n - 1})} \cdot e^{-\lambda (t - x_{n})}}{e^{-\lambda t} \cdot (\lambda t)^{n} / n!} \\
+  & = & \frac{n!}{t^{n}}
+\end{eqnarray*}
+\end{corollary}
+
+\begin{corollary}[推論]
+Consider a Poisson process with rate $ \lambda $. Suppose that $ p_{i}(\cdot) $ is a function over $ [0, t] $ such that each arrival time $ s \in [0, t] $ have probability $ p_{i}(s) $ to be a type $ i $ event. Then, the number $ N_{i}(t) $ of type $ i $ event in time $ [0, t] $ is Poisson random variable with parameter $ E[N_{i}(t)] = \lambda t \cdot R_{i}(t) $, where $ R_{i}(t) = \frac{1}{t} \int_{0}^{t} p_{i}(s) \mathrm{d}s $. Moreover, $ \mathbb{N}_{1}, \cdots, \mathbb{N}_{r} $ are independent.
+
+\begin{proof}
+We want to know the joint mass function
+\[ P(N_{1}(t) = n_{1}, \cdots, N_{r}(t) = n_{r}). \]
+
+Suppose $ n = n_{1} + \cdots + n_{r} $. Conditional on $ N(t) = n $, we know that each of there $ m $ event arrives independently and uniformly at random over $ [0, t] $. If an event arrives at time $ s \in [0, t] $, then with probability $ p_{i}(s) $ the event is of type $ i $. Therefore, each of there $ n $ events is of type $ i $ with probability
+\[ \int_{0}^{t} \frac{1}{t} P(\text{type } i \mid \text{arriving at time } s) \mathrm{d}t = \frac{1}{t} \int_{0}^{t}  p_{i}(s) \mathrm{d}t = R_{i}(t). \]
+
+Thus,
+\begin{eqnarray*}
+  &   & P(N_{1}(t) = n_{1}, \cdots, N_{r}(t) = n_{r}) \\
+  & = & P(N_{1}(t) = n_{1}, \cdots, N_{r}(t) = n_{r} \mid N(t) = n) \cdot P(N(t) = n) \\
+  & = & \left[ {{n}\choose{n_{1}, \cdots, n_{r}}} \cdot \prod_{i = 1}^{r} (R_{i}(t))^{n_{i}} \right] \cdot \frac{e^{-\lambda t} \cdot (\lambda t)^{n}}{n!} \\
+  & = & \prod_{i = 1}^{r} \frac{e^{-\lambda t (R_{i}(t))} \cdot (\lambda t R_{i}(t))^{n_{i}}}{n_{i}!} \\
+  & = & \prod_{i = 1}^{r} P(N_{i}(t) = n_{i}).
+\end{eqnarray*}
+\end{proof}
+\end{corollary}
+
+\begin{corollary}[推廣推論] \label{cor:ext_cor}
+Let $ \mathbb{N} $ be the Poisson process with rate $ \lambda $, $ p_{i}(t) $ the sampling probability of type $ i $ event at time $ t $. The number of type $ i $ event in time interval $ (s, s + t) $, i.e., $ N_{i}(s + t) - N_{i}(s) $ is a Poisson distribution with parameter $ \lambda \cdot \int_{s}^{s + t} p_{i}(r) \mathrm{d}r $. Moreover, $ N_{1}(s + t) - N_{1}(s), N_{2}(s + t) - N_{2}(s), \cdots $ are independent.
+\end{corollary}
+
+\begin{exercise}
+Proof \autoref{cor:ext_cor}.
+\end{exercise}
+
+\begin{example}
+Suppose that there are infinite number of servers, jobs arrive at a Poisson rate $ \lambda $, and the jobs are served immediately upon arrival. Let $ T $ be the service time of each job with distribution function $ F_{T}(t) = P(T \le t) $.
+\begin{description}
+  \item[Q1.] What is $ X(t) $, the number of completed jobs at time $ t $?
+  \item[Q2.] What is $ Y(t) $, the number of uncompleted jobs at time $ t $?
+  \item[Q3.] What is the joint distribution of $ Y(t_{1}) $ and $ Y(t_{2}) $ with $ t_{1} < t_{2} $?
+\end{description}
+
+\begin{description}
+\item[A1.] Suppose that
+\begin{description}
+  \item[Type 1:] completed job in $ [0, t] $, and
+  \item[Type 2:] arriving in $ [0, t] $, but not completed at time $ t $.
+\end{description}
+\[ p_{1}(s) = P(T \le t - s) = F_{T}(t - s). \]
+
+Thus, the number of type 1 ``events'' is a Poisson with parameter
+\[ \lambda tR_{1}(t) = \lambda t \cdot \frac{1}{t} \int_{0}^{t} F_{T}(t - s) \mathrm{d}s = \lambda \cdot \int_{0}^{t} F_{T}(t - s). \]
+
+\item[A2.] Poisson with parameter
+\[ \lambda t - \lambda \cdot \int_{0}^{t} F_{T}(t - s). \]
+
+\item[A3.] Suppose that
+\begin{description}
+  \item[Type 1:] arriving in $ [0, t_{1}] $, completing in $ [t_{1}, t_{2}] $,
+  \item[Type 2:] arriving in $ [0, t_{1}] $, but not completed at time $ t_{2} $,
+  \item[Type 3:] arriving in $ [t_{1}, t_{2}] $, but not completed at time $ t_{2} $, and
+  \item[Type 4:] otherwise.
+\end{description}
+\begin{eqnarray*}
+p_{1}(s) & = &
+  \begin{cases}
+    F_{T}(t_{2} - s) - F_{T}(t_{1} - s) & \text{if } 0 < s < t_{1}, \\
+    0                                   & \text{otherwise},
+  \end{cases} \\
+p_{2}(s) & = &
+  \begin{cases}
+    1 - F_{T}(t_{2} - s)                & \text{if } 0 < s < t_{1}, \\
+    0                                   & \text{otherwise},
+  \end{cases} \\
+p_{3}(s) & = &
+  \begin{cases}
+    1 - F_{T}(t_{2} - s)                & \text{if } t_{1} < s < t_{2}, \\
+    0                                   & \text{otherwise},
+  \end{cases} \\
+Y(t_{1}) & = & N_{1}(t) + N_{2}(t), \\
+Y(t_{2}) & = & N_{2}(t) + N_{3}(t).
+\end{eqnarray*}
+
+Thus, $ N_{1}(t) $ is a Poisson with parameter $ \lambda \cdot \int_{0}^{t} p_{1}(s) \mathrm{d}s $, $ N_{2}(t) $ is a Poisson with parameter $ \lambda \cdot \int_{0}^{t} p_{2}(s) \mathrm{d}s $, and $ N_{3}(t) $ is a Poisson with parameter $ \lambda \cdot \int_{0}^{t} p_{3}(s) \mathrm{d}s $.
+
+That is,
+\begin{eqnarray*}
+  &   & P(Y_{1}(t) = m, Y_{2}(t) = n) \\
+  & = & \sum_{n_{2} = 0}^{\min \{ m_{1}, m_{2} \}} P(N_{1}(t) = m_{1} - n_{2}, N_{2}(t) = n_{2}, N_{3}(t) = m_{2} - n_{2}) \\
+  & = & \sum_{n_{2} = 0}^{\min \{ m_{1}, m_{2} \}} P(N_{1}(t) = m_{1} - n_{2}) \cdot P(N_{2}(t) = n_{2}) \cdot P(N_{3}(t) = m_{2} - n_{2}) \\
+\end{eqnarray*}
+\end{description}
+\end{example}
+
+\begin{example}
+Car enter the high-way (length $ d $) with a Poisson rate $ \lambda $. The fixed speed of each car is a random variable $ S $ with distribution function $ F_{S} $. Suppose our car enters the high-way with speed $ s $. What is the probability distribution of the number of encounters?
+
+Suppose that our car enters at time $ t_{1} $ and leaves at time $ t_{2} $. We know that
+\[ t_{2} = t_{1} + \frac{d}{s}. \]
+
+Let $ T = d / S $ be the travel time with distribution function
+\[ F_{T}(t) = P(T \le t) = P \left( S \ge \frac{d}{t} \right) = 1 - F_{S} \left( \frac{d}{t} \right). \]
+
+\begin{description}
+  \item[Type 1a:] (passed by our car) \\
+    \[ (0 < t < t_{1}) \wedge (t + T > t_{2}). \]
+  \item[Type 1b:] (passing our car) \\
+    \[ (t_{1} < t < t_{2}) \wedge (t + T > t_{2}). \]
+\end{description}
+
+Therefore
+\[ P_{1}(t) =
+  \begin{cases}
+    P(T > t_{2} - t) = 1 - F_{T}(t_{2} - t)   & \text{if } 0 < t < t_{1}, \\
+    P(T < t_{2} - t) = F_{T}(t_{2} - t)       & \text{if } 0 < t < t_{1}, \\
+    0                                         & \text{otherwise}.
+  \end{cases} \]
+
+The answer is the Poisson distribution with parameter
+\[ \lambda \cdot \int_{0}^{\infty} P(t) \mathrm{d}t = \lambda \cdot \int_{0}^{\infty} (1 - F_{T}(t_{2} - t)) \mathrm{d}t + \lambda \cdot \int_{0}^{\infty} F_{T}(t_{2} - t) \mathrm{d}t. \]
+\end{example}
+
+\begin{example}
+H7N9 感染：Poisson with rate $ \lambda $（未知），潛伏期：T with distribution function $ F_{T} $。用發病人數估計未發病人數。
+
+Suppose that
+\begin{description}
+  \item[Type 1:] 發病
+  \item[Type 2:] 未發病
+\end{description}
+\[ p_{1}(s) = P(s + T \le t) = F_{T}(t - s). \]
+
+\begin{alignat*}{3}
+E[N_{1}(t)]
+  & \quad=\quad \lambda \cdot \int_{0}^{\infty} F_{T}(t - s) \mathrm{d}s
+  & \quad=\quad & \lambda \cdot \int_{0}^{\infty} F_{T}(y) \mathrm{d}y, \\
+E[N_{2}(t)]
+  & \quad=\quad \lambda \cdot \int_{0}^{\infty} (1 - F_{T}(t - s)) \mathrm{d}s
+  & \quad=\quad & \lambda \cdot \int_{0}^{\infty} (1 - F_{T}(y)) \mathrm{d}y.
+\end{alignat*}
+
+估計：
+\begin{alignat*}{3}
+  & n_{1} & \quad\approx\quad & \lambda \cdot \int_{0}^{\infty} F_{T}(y) \mathrm{d}y \\
+\Rightarrow\quad
+  & \hat{\lambda} & \quad=\quad & \frac{n_{1}}{\int_{0}^{\infty} F_{T}(y) \mathrm{d}y} \approx \lambda \\
+\Rightarrow\quad
+  & N_{2}(t) & \quad\approx\quad & \frac{n_{1} \cdot \int_{0}^{\infty} (1 - F_{T}(y)) \mathrm{d}y}{\int_{0}^{\infty} F_{T}(y) \mathrm{d}y}.
+\end{alignat*}
+
+\end{example}
