@@ -86,7 +86,7 @@ For each $ u = 1 \cdots, r $, let $ p_{i} $ be the probability of getting a coup
 \item \textbf{First attempt:}
 \begin{eqnarray*}
 P(C \le n)
-  & = & P(\max_{i} c_{i} \le n) \\
+  & = & P \left( \max_{i} c_{i} \le n \right) \\
   & = & P(c_{1} \le n, \cdots, c_{r} \le n) \\
   & \neq & \prod_{i = 1}^{r} P(c_{i} \le n).
 \end{eqnarray*}
@@ -97,7 +97,7 @@ Suppose that the coupons are collected in a Poisson process with rate 1. So now 
 Let $ x_{i} $ be the time of receiving the first type $ i $ coupon, $ i = 1, \cdots, r $, and $ X = \max_{1 \le i \le r} x_{i} $ the time that all $ r $ types of coupons are collected.
 \begin{eqnarray*}
 P(X \le t)
-  & = & P(\max_{1 \le i \le r} x_{i} \le t) \\
+  & = & P \left( \max_{1 \le i \le r} x_{i} \le t \right) \\
   & = & P(x_{1} \le t, \cdots, x_{r} \le t) \\
   & = & \prod_{i = 1}^{r} P(x_{i} \le t),
 \end{eqnarray*}
@@ -126,14 +126,14 @@ Let $ T_{1} $ be the first inter-arrival time. For any $ s $ with $ 0 \le s \le 
 P(T_{1} \le s \mid N(t) = 1)
   & = & \frac{P(T_{1} \le s, N(t) = 1)}{P(N(t) = 1)} \\
   & = & \frac{P(T_{1} \le s) \cdot P(N(t) - N(s) = 0)}{P(N(t) = 1)} \\
-  & = & \frac{P(e^{-\lambda t} \lambda s) \cdot e^{-\lambda(\lambda - s)}}{e^{-\lambda t} \lambda t} \\
+  & = & \frac{e^{-\lambda s} \cdot (\lambda s) \cdot e^{-\lambda(t - s)}}{e^{-\lambda t} \lambda t} \\
   & = & \frac{s}{t}.
 \end{eqnarray*}
 \end{proof}
 \end{properity}
 
 \begin{corollary}[推廣]
-Given that exactly $ n $ events of a Poisson process arrive in $ [0, t] $, what is the joint density of the $ n $ arrival times.
+Given that exactly $ n $ events of a Poisson process arrive in $ [0, t] $, what is the joint density of the $ n $ arrival times?
 
 For any $ 0 < x_{i} < \cdots < x_{n} < t $, the event that the $ i $-th event arrives at time $ x_{i} $, $ i = 1, \cdots, n $, and that there are exactly $ n $ events in $ [0, t] $ is equivent to
 \begin{eqnarray*}
@@ -146,9 +146,9 @@ T_{n + 1} & > & t - x_{n}
 
 The conditional joint density of the ``sorted'' arrival time is
 \begin{eqnarray*}
-  &   & f(x_{1}, \cdots, x_{n} \mid N(t) = n) \\
-  & = & \frac{f(x_{1}, \cdots, x_{n} \mid N(t) = n, n)}{P(N(t) = n)} \\
-  & = & \frac{\lambda e^{-\lambda x_{1}} \cdot \lambda e^{-\lambda (x_{2} - x_{1})} \cdot .... \cdot e^{-\lambda (x_{n} - x_{n - 1})} \cdot e^{-\lambda (t - x_{n})}}{e^{-\lambda t} \cdot (\lambda t)^{n} / n!} \\
+f(x_{1}, \cdots, x_{n} \mid N(t) = n)
+  & = & \frac{f(x_{1}, \cdots, x_{n}, n)}{P(N(t) = n)} \\
+  & = & \frac{\lambda e^{-\lambda x_{1}} \cdot \lambda e^{-\lambda (x_{2} - x_{1})} \cdot .... \cdot \lambda e^{-\lambda (x_{n} - x_{n - 1})} \cdot e^{-\lambda (t - x_{n})}}{e^{-\lambda t} \cdot (\lambda t)^{n} / n!} \\
   & = & \frac{n!}{t^{n}}
 \end{eqnarray*}
 \end{corollary}

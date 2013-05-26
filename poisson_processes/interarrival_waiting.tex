@@ -8,7 +8,7 @@ For each $ k > 1 $, the $ k $-th \defterm{inter-arrival time} $ T_{k} $ of a Poi
 If the rate of $ \mathbb{N} $ is $ \lambda $, then $ \mathbb{T} = T_{1}, T_{2}, \cdots $ is the infinite sequence of i.i.d. exponential random variables with parameter $ \lambda $.
 
 \begin{proof}
-Observe that $ T_{1} > s $ iff $ N(s) = 0 $. Let $ F_{1}(s) $ be the distribution function of $ T_{i} $,
+Observe that $ T_{1} > s $ iff $ N(s) = 0 $. Let $ F_{1}(s) $ be the distribution function of $ T_{1} $,
 \begin{eqnarray*}
 F_{1}(s)
   & = & P(T_{1} \le s) \\
@@ -39,11 +39,11 @@ Immedate from \autoref{obs:exp_with_lambda}. The probability density of $ S_{k} 
 
 \begin{verification}
 \begin{eqnarray*}
-P(s_{k} \le t)
+P(S_{k} \le t)
   & = & P(N(t) \ge k) \\
   & = & \sum_{i \ge k} P(N(t) = i) \\
   & = & \sum_{i \ge k} \frac{(\lambda t)^{i} \cdot e^{-\lambda t}}{i!}, \\
-\frac{\mathrm{d}}{\mathrm{d} t} P(s_{k} \le t)
+\frac{\mathrm{d}}{\mathrm{d} t} P(S_{k} \le t)
   & = & \sum_{i \ge k} \lambda \cdot \frac{(\lambda t)^{i - 1} \cdot e^{-\lambda t}}{i!} - \sum_{i \ge k} \lambda \cdot \frac{(\lambda t)^{i} \cdot e^{-\lambda t}}{i!} \\
   & = & \frac{\lambda e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!}.
 \end{eqnarray*}
@@ -51,12 +51,12 @@ P(s_{k} \le t)
 
 \begin{verification}
 \begin{eqnarray*}
-\lim_{h \to 0} P(t < s_{k} < t + h)
+\lim_{h \to 0} P(t < S_{k} < t + h)
   & = & \lim_{h \to 0} P(N(t) = k - 1, N(t + h) - N(t) \ge 1) \\
   & = & \lim_{h \to 0} P(N(t) = k - 1) \cdot P(N(t + h) - N(t) \ge 1) \\
-  & = & \lim_{h \to 0} \frac{e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!} \cdot (\lambda h + o(t)).
+  & = & \lim_{h \to 0} \frac{e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!} \cdot (\lambda h + o(h)).
 \end{eqnarray*}
 The density function of $ S_{k} $ is
-\[ f(t) = \lim_{h \to 0} \frac{1}{h} P(t < s_{k} < t + h) = \frac{\lambda e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!}. \]
+\[ f(t) = \lim_{h \to 0} \frac{1}{h} P(t < S_{k} < t + h) = \frac{\lambda e^{-\lambda t} \cdot (\lambda t)^{k - 1}}{(k - 1)!}. \]
 \end{verification}
 \end{observation}
