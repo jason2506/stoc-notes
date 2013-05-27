@@ -134,7 +134,7 @@ We only need to know $ b_{i} $ for all $ i \in \mathcal{S} $ such that $ P(X = i
 \subsubsection{Mathematical definition of $ \mathbb{X} : \mathbb{P} $}
 \begin{enumerate}
   \item Let $ \mathbb{Q} $ be the transition matrix of an arbitrary irreducible Markov chain over the same space of $ \mathbb{X} $ (This is what we have to ``design'').
-  \item Probability $ g(i, j) $ for any two states $ i, j \in \mathcal{S} $ is to be determined later (This depends on $ \mathbb{Q} $ and $ \boldsymbol\pi $).
+  \item Probability $ q(i, j) $ for any two states $ i, j \in \mathcal{S} $ is to be determined later (This depends on $ \mathbb{Q} $ and $ \boldsymbol\pi $).
 \end{enumerate}
 \begin{eqnarray*}
 \mathbb{P}[i, j] & = &
@@ -150,8 +150,8 @@ q(i, j) & = & \min \left\{ \frac{b_{j} \cdot \mathbb{Q}[j, i]}{b_{i} \cdot \math
   \item \textbf{Repeat for} $ n = 0, 1, \cdots $
     \begin{description}
       \item[Step 1.] Let $ i = X(n) $. \\
-        Set $ Y_{n} $ according to the probability specified by the $ i $-th row of $ \mathbb{Q} $. \\
-        That is, $ P(Y_{n} = j) = \mathbb{Q}[i, j] $ for all $ j \in \mathcal{S} $.
+        Set $ Y(n) $ according to the probability specified by the $ i $-th row of $ \mathbb{Q} $. \\
+        That is, $ P(Y(n) = j) = \mathbb{Q}[i, j] $ for all $ j \in \mathcal{S} $.
       \item[Step 2.] Let $ j = Y(n) $. \\
         Set $ X(n + 1) $ to be $ j $ with probability $ q(i, j) $, and to be $ i $ with probability $ 1 - q(i, j) $.
     \end{description}

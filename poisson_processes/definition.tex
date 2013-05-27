@@ -16,12 +16,12 @@ The distribution of the number of events that occur in any interval of time depe
 \end{definition}
 
 \begin{definition}[\defterm{Poisson process}]
-A \defterm*{poisson process} with rate $ \lambda $ is a counting process $ \mathbb{N} $ with $ N(0) = 0 $ possessing (a) independent increments and (b) stationary increments such that the number of events in any interval of length $ t $ is a poisson distribution with mean $ \lambda t $. That is,
+A \defterm*{Poisson process} with rate $ \lambda $ is a counting process $ \mathbb{N} $ with $ N(0) = 0 $ possessing (a) independent increments and (b) stationary increments such that the number of events in any interval of length $ t $ is a Poisson distribution with mean $ \lambda t $. That is,
 \[ P(N(t + s) - N(s) = n) = \frac{e^{-\lambda t} \cdot (\lambda t)^{n}}{n!}. \]
 \end{definition}
 
 \begin{theorem}[操作型定義] \label{thm:op_def}
-$ \mathbb{N} $ is a possion process iff $ \mathbb{N} $ possesses independent increments and stationary increments and the following two conditions for any $ t \ge 0 $ holds:
+$ \mathbb{N} $ is a Poisson process iff $ \mathbb{N} $ possesses independent increments and stationary increments and the following two conditions for any $ t \ge 0 $ holds:
 \begin{enumerate}
   \item $ P(N(t) = 1) = \lambda t + o(t) $,
   \item $ P(N(t) \ge 2) = o(t) $,
