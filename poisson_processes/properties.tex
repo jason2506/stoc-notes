@@ -160,8 +160,8 @@ Consider a Poisson process with rate $ \lambda $. Suppose that $ p_{i}(\cdot) $ 
 We want to know the joint mass function
 \[ P(N_{1}(t) = n_{1}, \cdots, N_{r}(t) = n_{r}). \]
 
-Suppose $ n = n_{1} + \cdots + n_{r} $. Conditional on $ N(t) = n $, we know that each of there $ m $ event arrives independently and uniformly at random over $ [0, t] $. If an event arrives at time $ s \in [0, t] $, then with probability $ p_{i}(s) $ the event is of type $ i $. Therefore, each of there $ n $ events is of type $ i $ with probability
-\[ \int_{0}^{t} \frac{1}{t} P(\text{type } i \mid \text{arriving at time } s) \mathrm{d}t = \frac{1}{t} \int_{0}^{t}  p_{i}(s) \mathrm{d}t = R_{i}(t). \]
+Suppose $ n = n_{1} + \cdots + n_{r} $. Conditional on $ N(t) = n $, we know that each of these $ m $ event arrives independently and uniformly at random over $ [0, t] $. If an event arrives at time $ s \in [0, t] $, then with probability $ p_{i}(s) $ the event is of type $ i $. Therefore, each of these $ n $ events is of type $ i $ with probability
+\[ \int_{0}^{t} \frac{1}{t} P(\text{type } i \mid \text{arriving at time } s) \mathrm{d}s = \frac{1}{t} \int_{0}^{t}  p_{i}(s) \mathrm{d}s = R_{i}(t). \]
 
 Thus,
 \begin{eqnarray*}
@@ -235,7 +235,7 @@ Thus, $ N_{1}(t) $ is a Poisson with parameter $ \lambda \cdot \int_{0}^{t} p_{1
 
 That is,
 \begin{eqnarray*}
-  &   & P(Y_{1}(t) = m, Y_{2}(t) = n) \\
+  &   & P(Y_{1}(t) = m_{1}, Y_{2}(t) = m_{2}) \\
   & = & \sum_{n_{2} = 0}^{\min \{ m_{1}, m_{2} \}} P(N_{1}(t) = m_{1} - n_{2}, N_{2}(t) = n_{2}, N_{3}(t) = m_{2} - n_{2}) \\
   & = & \sum_{n_{2} = 0}^{\min \{ m_{1}, m_{2} \}} P(N_{1}(t) = m_{1} - n_{2}) \cdot P(N_{2}(t) = n_{2}) \cdot P(N_{3}(t) = m_{2} - n_{2}) \\
 \end{eqnarray*}
@@ -243,7 +243,7 @@ That is,
 \end{example}
 
 \begin{example}
-Car enter the high-way (length $ d $) with a Poisson rate $ \lambda $. The fixed speed of each car is a random variable $ S $ with distribution function $ F_{S} $. Suppose our car enters the high-way with speed $ s $. What is the probability distribution of the number of encounters?
+Cars enter the high-way (length $ d $) with a Poisson rate $ \lambda $. The fixed speed of each car is a random variable $ S $ with distribution function $ F_{S} $. Suppose our car enters the high-way with speed $ s $. What is the probability distribution of the number of encounters?
 
 Suppose that our car enters at time $ t_{1} $ and leaves at time $ t_{2} $. We know that
 \[ t_{2} = t_{1} + \frac{d}{s}. \]
@@ -258,7 +258,7 @@ Let $ T = d / S $ be the travel time with distribution function
     \[ (t_{1} < t < t_{2}) \wedge (t + T > t_{2}). \]
 \end{description}
 
-Therefore
+Therefore,
 \[ P_{1}(t) =
   \begin{cases}
     P(T > t_{2} - t) = 1 - F_{T}(t_{2} - t)   & \text{if } 0 < t < t_{1}, \\
