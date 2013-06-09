@@ -1,0 +1,31 @@
+\section{Birth and Death Process}
+
+\begin{definition}
+Suppose that there are $ n $ people in the system, then the time $ B_{n} $ for a new member to join is exponential distribution with parameter $ \beta_{n} $, and the time $ D_{n} $ for a member to leave is exponential distribution with parameter $ \delta_{n} $. Such a system is called a \defterm{birth and death process}, and the parameters $ \{ \beta_{n} \}_{n \ge 0} $ and $ \{ \delta_{n} \}_{n \ge 0} $ are called \defterm{birth rate} and \defterm{death rate}, respectively.
+
+Thus, the birth and death process is a continuous-time Markov chain with states $ \mathcal{S} = \{ 0, 1, \cdots \} $ for which transitions from state $ n $ may go only to either state $ n - 1 $ or $ n + 1 $, and
+\begin{eqnarray*}
+\forall(i \ge 2). \mathbb{P}[n, n \pm i] & = & 0, \\
+\forall(n \le 1). \mathbb{P}[n, n - 1]
+    & = & P(B_{n} > D_{n}) \\
+    & = & \int_{0}^{\infty} P(B_{n} > t) \cdot P(D_{n} = t) \mathrm{d}t \\
+    & = & \int_{0}^{\infty} e^{-\beta_{n}t} \cdot \delta_{n} \cdot e^{\delta_{n}t} \mathrm{d}t \\
+    & = & \delta_{n} \int_{0}^{\infty} e^{-(\beta_{n} + \delta_{n})t} \mathrm{d}t \\
+    & = & \frac{\delta_{n}}{\beta_{n} + \delta_{n}}, \\
+\mathbb{P}[n, n + 1] & = & \frac{\beta_{n}}{\beta_{n} + \delta_{n}}.
+\end{eqnarray*}
+\end{definition}
+
+\begin{example}
+Poisson process with rate $ \lambda $: $ \beta_{n} = n $, $ \delta_{n} = 0 $.
+\end{example}
+
+\begin{example}
+Yule process: birth process with linear birth. $ \beta_{n} = \lambda \cdot n $, $ \delta_{n} = 0 $.
+\end{example}
+
+\begin{example}
+There are $ s $ servers. Jobs arrive at Poisson process with rate $ \lambda $, and the processing time is exponential with parameter $ \mu $. If all $ s $ servers are busy, there is a queue keeping the waiting jobs.
+
+Let $ X(t) $ be the number of jobs in the system (including those in queue) at time $ t $, then $ \mathbb{X} $ is a birth and death process with $ \beta_{n} = \lambda $ and $ \delta_{n} = \mu \cdot \min \{n, s\} $.
+\end{example}
