@@ -68,14 +68,14 @@ $ \lambda_{k}\mathbb{P}^{t}[k, i] $ 為時間 0 為 type $ k $，到時間 $ t $
 Offers for buying an object arrive at a Poisson process with rate $ \lambda $. The value of each offer is non-negative with density function $ f(x) $. Suppose that the selling strategy is giving to the first offer $ \ge y $ and the cost holding the object is $ C $ per unit time. What is the expected payoff?
 
 The probability of each offer being accepted is
-\[ P(y) = P(X \ge y) = \int_{y}^{\infty} f(x) \mathrm{d}x. \]
+\[ p(y) = P(X \ge y) = \int_{y}^{\infty} f(x) \mathrm{d}x. \]
 
 The excepted payoff
 \begin{eqnarray*}
 E[\text{accepted offer}] - E[\text{cost}]
-  & = & \int_{0}^{\infty} xf_{X \mid X \ge y}(x) \mathrm{d}x - \frac{C}{\lambda \cdot P(y)} \\
-  & = & \int_{y}^{\infty} x \cdot \frac{f(x)}{P(X \ge y)} \mathrm{d}x - \frac{C}{\lambda \cdot P(y)} \\
-  & = & \frac{1}{P(y)} \left( \int_{y}^{\infty} xf(x) \mathrm{d}x - \frac{C}{\lambda} \right).
+  & = & \int_{0}^{\infty} xf_{X \mid X \ge y}(x) \mathrm{d}x - \frac{C}{\lambda \cdot p(y)} \\
+  & = & \int_{y}^{\infty} x \cdot \frac{f(x)}{P(X \ge y)} \mathrm{d}x - \frac{C}{\lambda \cdot p(y)} \\
+  & = & \frac{1}{p(y)} \left( \int_{y}^{\infty} xf(x) \mathrm{d}x - \frac{C}{\lambda} \right).
 \end{eqnarray*}
 \end{example}
 
@@ -175,7 +175,7 @@ Thus,
 \end{corollary}
 
 \begin{corollary}[推廣推論] \label{cor:ext_cor}
-Let $ \mathbb{N} $ be the Poisson process with rate $ \lambda $, $ p_{i}(t) $ the sampling probability of type $ i $ event at time $ t $. The number of type $ i $ event in time interval $ (s, s + t) $, i.e., $ N_{i}(s + t) - N_{i}(s) $ is a Poisson distribution with parameter $ \lambda \cdot \int_{s}^{s + t} p_{i}(r) \mathrm{d}r $. Moreover, $ N_{1}(s + t) - N_{1}(s), N_{2}(s + t) - N_{2}(s), \cdots $ are independent.
+Let $ \mathbb{N} $ be the Poisson process with rate $ \lambda $, $ p_{i}(t) $ the sampling probability of type $ i $ event at time $ t $. The number of type $ i $ event in time interval $ [s, s + t] $, i.e., $ N_{i}(s + t) - N_{i}(s) $ is a Poisson distribution with parameter $ \lambda \cdot \int_{s}^{s + t} p_{i}(r) \mathrm{d}r $. Moreover, $ N_{1}(s + t) - N_{1}(s), N_{2}(s + t) - N_{2}(s), \cdots $ are independent.
 \end{corollary}
 
 \begin{exercise}
@@ -262,7 +262,7 @@ Therefore,
 \[ p_{1}(t) =
   \begin{cases}
     P(T > t_{2} - t) = 1 - F_{T}(t_{2} - t)   & \text{if } 0 < t < t_{1}, \\
-    P(T < t_{2} - t) = F_{T}(t_{2} - t)       & \text{if } 0 < t < t_{1}, \\
+    P(T < t_{2} - t) = F_{T}(t_{2} - t)       & \text{if } t_{1} < t < t_{2}, \\
     0                                         & \text{otherwise}.
   \end{cases} \]
 
@@ -271,7 +271,7 @@ The answer is the Poisson distribution with parameter
 \end{example}
 
 \begin{example}
-H7N9 感染：Poisson with rate $ \lambda $（未知），潛伏期：T with distribution function $ F_{T} $。用發病人數估計未發病人數。
+H7N9 感染：Poisson with rate $ \lambda $（未知），潛伏期：$ T $ with distribution function $ F_{T} $。用發病人數估計未發病人數。
 
 Suppose that
 \begin{description}
