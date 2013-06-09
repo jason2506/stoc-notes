@@ -1,0 +1,61 @@
+\section{Definition}
+
+\begin{definition}
+The collection $ \mathbb{X} = \{ X(t) \mid t \ge 0 \} $ of non-negative integral random variable is a \defterm{continuous-time Markov chain} if
+\[ P(X(s + t) = j \mid X(s) = i \wedge \forall(0 \le r < s) .X(r) = x(r)) = P(X(s + t) = j \mid X(s) = i) \]
+holds for any $ s $, $ t $, $ i $, $ j $, and non-negative integral function $ x(\cdot) $.
+\begin{comment}
+Non-homogeneous Poisson process with intensity function $ \lambda(\cdot) $ is a continuous-time Markov chain given $ \mathbb{N}(s) = n $, the number of events in time $ [s, s + t] $ is a Poisson distribution with parameter
+\[ \int_{s}^{s + t} \lambda(x) \mathrm{d}x, \]
+having nothing to do with $ N(s - \epsilon) $ for all $ \epsilon \le 0 $.
+\end{comment}
+\end{definition}
+
+\begin{definition}
+If the condition probability $ P(X(s + t) = j \mid X(s) = i) $ is independent of $ s $ for all states $ i $ and $ j $, then the continuous-time Markov chain is said to have \defterm{homogeneous transition} probabilities. (我們只會討論這一類。)
+\end{definition}
+
+\begin{example}
+Homogeneous Poisson process 就是一個 continuous-time Markov chain with homogeneous transition probabilities.
+\end{example}
+
+\begin{observation}
+The time for $ \mathbb{X} $ to stay in state $ i $ is an exponential distribution.
+\begin{proof}
+Suppose that $ X(r) = i $ for some $ r \le 0 $.
+Let $ T_{i} $ be the waiting time of transitioning to a different state. Then,
+\begin{eqnarray*}
+P(T_{i} \ge s + t \mid T_{i} \ge s)
+  & = & P(\forall(r + s \le v \le r + s + t).X(v) = i \mid \forall(r \le u \le r + s).X(u) = i) \\
+  & = & P(\forall(r + s \le v \le r + s + t).X(v) = i \mid X(r + s) = i) \\
+  & = & P(\forall(r \le v \le r + t).X(v) = i \mid X(r) = i) \\
+  & = & P(T_{i} \ge t).
+\end{eqnarray*}
+\end{proof}
+\begin{comment}
+我們稱這個 exponential distribution 的參數為 $ \lambda_{i} $.
+\end{comment}
+\end{observation}
+
+\begin{observation}
+Given $ X(s) = i $, the probability that ``the next state other than $ i $ is $ j $'' is a value $ \mathbb{P}[i, j] $ that is independent of $ s $.
+\begin{proof}
+Let $ \mathbb{T} $ be the waiting time of the first transition from state $ i $ to a state other than $ i $. We have
+\begin{eqnarray*}
+\mathbb{P}[i, j]
+  & = & P(X(T_{i} + s) = j \mid X(s) = i) \\
+  & = & P(X(T_{i} = j \mid X(0) = i)).
+\end{eqnarray*}
+
+Therefore, $ \mathbb{X} $ can be completely characteried by
+\begin{enumerate}
+  \item The exponential time with parameters $ \lambda_{i} $ for all state $ i \in \mathcal{S} $.
+  \item The transition probability $ \mathbb{P}[i, j] $ of all $ i, j \in \mathcal{S} $.
+\end{enumerate}
+\end{proof}
+\end{observation}
+
+\begin{example}
+理髮店具有三種狀態：沒人（state 0）、理髮（state 1）、洗頭（state 2）。每位客人來到店內後，必定會先剪完頭髮，然後洗完頭才會離開。若店內已經有客人，新來的客人會立刻離開。若客人來的過程為 Poisson process with rate $ \lambda_{0} $，且理髮與洗頭所花費的時間分別為 exponential distribution with $ \lambda_{1} $ 與 $ \lambda_{2} $，則店的狀態改變過程就是一個 continuous-time Markov chain，且
+\[ \mathbb{P}[0, 1] = \mathbb{P}[1, 2] = \mathbb{P}[2, 0] = 1. \]
+\end{example}
