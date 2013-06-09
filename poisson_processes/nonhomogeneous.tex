@@ -51,7 +51,7 @@ Let $ \mathbb{H} $ be a homogeneous Poisson with rate $ \lambda $. We then apply
 \end{proposition}
 
 \begin{question}
-What is the number of events in time interval $ (s, s + t) $ in a non-homegeneous Poisson process $ \mathbb{N} $ with intensity function $ \lambda(\cdot) $, which is bounded in $ (s, s + t) $?
+What is the number of events in time interval $ [s, s + t] $ in a non-homegeneous Poisson process $ \mathbb{N} $ with intensity function $ \lambda(\cdot) $, which is bounded in $ [s, s + t] $?
 
 Suppose that $ P(\cdot) = \lambda(\cdot) / \lambda $ is the sampling probability function to obtin $ \mathbb{N} $ from $ \mathbb{H} $. By \autoref{cor:ext_cor}, the number of $ \mathbb{N} $ by time $ t $ is a Poisson distribution with parameter
 \[ \lambda \cdot \int_{s}^{s + t} P(x) \mathrm{d}x = \int_{s}^{s + t} \lambda(x) \mathrm{d}x. \]
@@ -75,3 +75,48 @@ Poisson distribution with parameter
 Thus,
 \[ P(N = 0) = \frac{10^{0} \cdot e^{-10}}{0!} = e^{-10}. \]
 \end{example}
+
+\begin{example}
+There are infinite number of servers, and jobs arrive at a Poisson process with rate $ \lambda $. The service time $ T $ of each job has distribution function $ F_{T} $ (and density function $ f_{T} $). Then, the departing process of the completed jobs is a non-homogeneous Poisson process with intensity $ \lambda(t) = \lambda \cdot F_{T(\cdot)} $.
+
+\begin{itemize}
+\item \textbf{Condition 1:} trivial.
+\item \textbf{Condition 2:} independent increments.
+
+\item \textbf{Condition 3\&4:}
+The number of jobs departing in time $ [t, t + h] $ is a Poisson process with parameter 
+\begin{eqnarray*}
+  &   & \lambda \cdot \int_{0}^{t + h} (F_{T}(t + h - r) - F_{T}(t - r)) \mathrm{d}r \\
+  & {\color{red}=} & \lambda \cdot \int_{0}^{t + h} (f_{T}(t + h - r) \cdot h + o(h)) \mathrm{d}r \\
+  & = & \lambda h \cdot \int_{0}^{t + h} f_{T}(x) \mathrm{d}x + o(h) \\
+  & = & \lambda h \cdot F_{T}(t + h) + o(h) \\
+  & = & \lambda h \cdot F_{T}(t) + o(h).
+\end{eqnarray*}
+
+Thus,
+\begin{eqnarray*}
+P(N(t + h) - N(t) = 1)
+  & = & (\lambda h \cdot F_{T}(t) + o(h)) \cdot e^{-\lambda h \cdot F_{T}(t) + o(h)} \\
+  & = & (\lambda h \cdot F_{T}(t) + o(h)) \cdot (1 - \lambda h \cdot F_{T}(t) + o(h)) \\
+  & = & \lambda h \cdot F_{T}(t) + o(h). \\
+P(N(t + h) - N(t) \le 2)
+  & = & \sum_{k \ge 2} \frac{(\lambda h \cdot F_{T}(t) + o(h))^{k} \cdot (1 - \lambda h \cdot F_{T}(t) + o(h))}{k!} \\
+  & = & o(h).
+\end{eqnarray*}
+\end{itemize}
+
+\begin{comment}
+\begin{eqnarray*}
+  & \because & \lim_{h \to 0} \frac{F_{T}(t + h - r) - F_{T}(t - r)}{h} - f_{T}(t + h - r) = 0 \\
+  & \therefore & \frac{F_{T}(t + h - r) - F_{T}(t - r)}{h} = f_{T}(t + h - r) + \frac{o(h)}{h}
+\end{eqnarray*}
+\end{comment}
+\end{example}
+
+\begin{proposition} \label{pro:union_non_homo}
+\[ \mathbb{N} = \mathbb{N}_{1} + \mathbb{N}_{2} \Rightarrow \lambda(t) = \lambda_{1}(t) + \lambda_{2}(t). \]
+\end{proposition}
+
+\begin{exercise}
+Proof \autoref{pro:union_non_homo}.
+\end{exercise}
