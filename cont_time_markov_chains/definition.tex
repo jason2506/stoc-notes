@@ -55,7 +55,7 @@ Therefore, $ \mathbb{X} $ can be completely characteried by
 \end{proof}
 \end{observation}
 
-\begin{example}
+\begin{example} \label{ex:barber_shop}
 理髮店具有三種狀態：沒人（state 0）、理髮（state 1）、洗頭（state 2）。每位客人來到店內後，必定會先剪完頭髮，然後洗完頭才會離開。若店內已經有客人，新來的客人會立刻離開。若客人來的過程為 Poisson process with rate $ \lambda_{0} $，且理髮與洗頭所花費的時間分別為 exponential distribution with $ \lambda_{1} $ 與 $ \lambda_{2} $，則店的狀態改變過程就是一個 continuous-time Markov chain，且
 \[ \mathbb{P}[0, 1] = \mathbb{P}[1, 2] = \mathbb{P}[2, 0] = 1. \]
 \end{example}

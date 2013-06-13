@@ -1,0 +1,94 @@
+\section{Limiting Probability}
+
+\begin{definition}
+If $ \lim_{t \to \infty} p_{i, j}(t) $ exists and is independent of $ i $, then
+\[ \pi_{j} = \lim_{t \to \infty} p_{i, j}(t) \]
+is the \defterm{limiting probability} of state $ j $.
+\end{definition}
+
+\begin{definition}
+For states $ i $ and $ j $, $ i \to j $ if $ P(\exists t. X(t) = j \mid X(0) = i) > 0 $.
+\end{definition}
+
+\begin{definition}
+$ \mathbb{X} $ is \defterm{irreducible} if $ i \to j $ and $ j \to i $ for all states $ i, j \in \mathcal{S} $.
+\end{definition}
+
+\begin{definition}
+$ \mathbb{X} $ is \defterm{positive recurrent} if $ E[\inf \{ t > 0 \mid X(t) = i \}] $ is finite under $ X(0) = i $ for all $ i \in \mathcal{S} $.
+\end{definition}
+
+\begin{definition}
+$ \boldsymbol\pi $ is a \defterm{stationary distribution} of $ \mathbb{X} $ if $ \boldsymbol\pi $ is the distribution of $ X(0) $ $ \Rightarrow $ $ \boldsymbol\pi $ is the distribution of $ X(t) $ for all $ t > 0 $.
+\end{definition}
+
+\begin{definition}
+The \defterm{long-run proportion} of $ j $ is
+\[ \lim_{t \to \infty} \frac{1}{t} \int_{0}^{t} \llbracket X(x) = j \rrbracket \mathrm{d}x, \]
+where
+\[ \llbracket s \rrbracket = \begin{cases}
+1 & \text{if $ s $ is \texttt{true}}, \\
+0 & \text{if $ s $ is \texttt{false}}.
+\end{cases} \]
+\end{definition}
+
+\begin{theorem}
+If $ \mathbb{X} $ is irreducible and positive recurrent, then
+\begin{itemize}
+  \item all state $ i \in \mathcal{S} $ have limiting probability $ \pi_{i} $,
+  \item $ \sum_{j \in \mathcal{S}} \pi_{j} = 1 $,
+  \item $ \boldsymbol\pi $ is the unique stationary distribution of $ \mathbb{X} $, and
+  \item $ \pi_{j} $ is the long-run proportion of state $ j $.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[balance equation]
+If \nameref{thm:forward_eq} holds and $ \mathbb{X} $ is irreducible and positive recurrent, then for each state $ j $ of $ \mathbb{X} $,
+\[ \pi_{j} \cdot \lambda_{j} = \sum_{k \in \mathcal{S}} \pi_{k} \cdot q_{k, j}. \]
+\begin{comment}
+可配合 $ \sum_{j \in \mathcal{S}} \pi_{j} = 1 $ 來解出 $ \boldsymbol\pi $。
+\end{comment}
+\begin{comment}
+不嚴謹的說明：
+\begin{eqnarray*}
+0 & = & \lim_{t \to 0} p'_{i, j}(t) \\
+  & = & \lim_{t \to 0} \left( \sum_{k \in \mathcal{S}} p_{i, k}(t) \cdot q_{k, j} - \lambda_{j} \cdot p_{i, j}(t) \right) \\
+  & = & \sum_{k \in \mathcal{S}} \pi_{k} \cdot q_{k, j} - \lambda_{j} \cdot \pi_{j}.
+\end{eqnarray*}
+\end{comment}
+\begin{comment}
+Interpretation:
+\begin{itemize}
+  \item \textbf{L.H.S.}: Poisson rate of the process of leaving $ j $.
+  \item \textbf{R.H.S.}: Poisson rate of the process of entering $ j $.
+\end{itemize}
+\end{comment}
+\end{theorem}
+
+\begin{example}
+From \autoref{ex:barber_shop},
+\[ \begin{cases}
+\lambda_{0} \pi_{0} = \lambda_{2} \pi_{2} \\
+\lambda_{1} \pi_{1} = \lambda_{0} \pi_{0} \\
+\lambda_{2} \pi_{2} = \lambda_{1} \pi_{1} \\
+\pi_{0} + \pi_{1} + \pi_{2} = 1
+\end{cases} \Rightarrow \pi_{0} = \left( \frac{\lambda_{0}}{\lambda_{0}} + \frac{\lambda_{0}}{\lambda_{1}} + \frac{\lambda_{0}}{\lambda_{2}} \right)^{-1}. \]
+\end{example}
+
+\begin{example}
+Birth and death process:
+
+\begin{tabular}{|c|c|c|} \hline
+  state $ i $ & leaving $ i $ & entering $ i $ \\ \hline
+  $ 0 $ & $ \beta_{0} \cdot \pi_{0} $ & $ \delta_{1} \cdot \pi_{1} $ \\ \hline
+  $ 1 $ & $ (\beta_{1} + \delta_{1}) \cdot \pi_{1} $ & $ \beta_{0} \cdot \pi_{0} + \delta_{2} \cdot \pi_{2} $ \\ \hline
+  $ 2 $ & $ (\beta_{2} + \delta_{2}) \cdot \pi_{2} $ & $ \beta_{1} \cdot \pi_{1} + \delta_{3} \cdot \pi_{3} $ \\ \hline
+  $ \vdots $ & $ \vdots $ & $ \vdots $ \\ \hline
+  $ n $ & $ (\beta_{n} + \delta_{n}) \cdot \pi_{n} $ & $ \beta_{n - 1} \cdot \pi_{n - 1} + \delta_{n + 1} \cdot \pi_{n + 1} $ \\ \hline
+  $ \vdots $ & $ \vdots $ & $ \vdots $ \\ \hline
+\end{tabular}
+\begin{eqnarray*}
+\pi_{0} & = & \left( 1 + \sum_{k = 1}^{\infty} \prod_{i = 0}^{k - 1} \frac{\beta_{i}}{\delta_{i + 1}} \right)^{-1}, \\
+\pi_{n} & = & \prod_{i = 0}^{n - 1} \frac{\beta_{i}}{\delta_{i + 1}} \cdot \pi_{0}.
+\end{eqnarray*}
+\end{example}
