@@ -1,0 +1,133 @@
+\section{Transition Probability Function}
+
+\begin{definition}
+For states $ i $ and $ j $, the \defterm{transition probability function} from $ i $ to $ j $ is
+\[ p_{i, j}(t) = P(X(t) = j \mid X(0) = i). \]
+\end{definition}
+
+\begin{lemma}
+If $ \mathbb{X} $ is a pure-birth process ($ \forall n \in \mathcal{S}. \delta_{0} = 0 $),
+\[ p_{i, j}(t) = \begin{cases}
+e^{-\beta_{i}t}               & \text{if } i = j, \\
+Q_{i, j}(t) - Q_{i, j - 1}(t) & \text{if } i < j.
+\end{cases} \]
+where $ Q_{i, j}(t) = P(T_{i} + T_{i + 1} + \cdots + T_{j} > t) $, and $ T_{i} $ is the waiting time of state $ i $.
+\begin{proof}
+\begin{itemize}
+\item If $ i = j $,
+\begin{eqnarray*}
+p_{i, i}(t)
+  & = & P(T_{i} > t) \\
+  & = & 1 - P(T_{i} \le t) \\
+  & = & 1 - (1 - e^{-\beta_{i}t}) \\
+  & = & e^{-\beta_{i}t}.
+\end{eqnarray*}
+
+\item If $ i < j $,
+\begin{eqnarray*}
+P(X(t) < j \mid X(0) = i)
+  & = & P(T_{i} + T_{i + 1} + \cdots + T_{j - 1} > t) \\
+  & = & Q_{i, j - 1}(t), \\
+p_{i, j}(t)
+  & = & P(X(t) = j \mid X(0) = i) \\
+  & = & P(X(t) < j + 1 \mid X(0) = i) - P(X(t) < j \mid X(0) = i) \\
+  & = & Q_{i, j}(t) - Q_{i, j - 1}(t).
+\end{eqnarray*}
+\end{itemize}
+\end{proof}
+\end{lemma}
+
+\begin{example}
+Yule process: $ \beta_{n} = n \cdot \beta $, $ \delta_{n} = 0 $.
+\begin{eqnarray*}
+Q_{i, j}(t) 
+  & {\color{red}=} & \sum_{k = i}^{j} e^{\beta_{k}t} \cdot \prod_{r = i}^{j} \frac{\beta_{r}}{\beta_{r} - \beta_{k}} \\
+  &   & \color{gray}{(\text{這裡有用到 $ T_{i}, T_{i + 1}, \cdots, T_{j - 1} $ 是參數「相異」指數分佈的性質})} \\
+  & = & \sum_{k = i}^{j} e^{\beta_{k}t} \cdot \prod_{r = i}^{j} \frac{r}{r - k} \\
+  & {\color{red}=} & e^{\beta_{j}t} \cdot \prod_{r = i}^{j} \frac{r}{r - j} + \sum_{k = i}^{j - 1} e^{\beta_{k}t} \cdot \prod_{r = i}^{j} \frac{j - 1}{(i - k)(i + 1 - k) \cdots (j - k)} \\
+p_{1, j}(t)
+  & {\color{red}=} & e^{\beta_{j}t} (1 - e^{\beta_{j}t})^{j - 1}.
+\end{eqnarray*}
+可知 $ p_{1, j}(t) $ 為 geometric distribution with parameter $ p = e^{-\beta t} $，且 $ p_{i, j}(t) $ 為 negative binomial distribution with param $ (i, p) $，因為 $ i $ 個 geometric 相加為 negative binomial。
+
+That is,
+\[ p_{i, j}(t) = {{j - 1}\choose{i - 1}} \cdot e^{-\beta_{i}t}(1 - e^{-\beta_{i}t})^{i - 1}. \]
+\end{example}
+
+\begin{definition}
+For states $ i $ and $ j $, the \defterm{instantaneous transition rate} is
+\[ q_{i, j} = \begin{cases}
+0                                   & \text{if } i = j, \\
+\lambda_{i} \cdot \mathbb{P}[i, j]  & \text{if } i \neq j.
+\end{cases} \]
+\begin{comment}
+$ \lambda_{i} $ 是離開 state $ i $ 的 Poisson rate；$ \lambda_{i} \cdot \mathbb{P}[i, j] $ 是離開 state $ i $ 、跑到 state $ j $ 的 Poisson rate。
+\end{comment}
+\begin{comment}
+\begin{eqnarray*}
+\lambda_{i}
+  & = & \sum_{j \in \mathcal{S}} \lambda_{i} \cdot \mathbb{P}[i, j] \\
+  & = & \sum_{j \in \mathcal{S}} q_{i, j}, \\
+\mathbb{P}[i, j]
+  & = & \frac{q_{i, j}}{\lambda_{i}} \\
+  & = & \frac{q_{i, j}}{\sum_{j \in \mathcal{S}} q_{i, j}}.
+\end{eqnarray*}
+\end{comment}
+\end{definition}
+
+\subsection{Kolmogorov's Equations}
+
+\begin{theorem}[backward equation] \label{thm:backward_eq}
+For any $ \mathbb{X} $,
+\[ p'_{i, j}(t) + \lambda_{i} \cdot p_{i, j}(t) = \sum_{k \in \mathcal{S}} q_{i, k} \cdot p_{k, j}(t). \]
+\end{theorem}
+
+\begin{theorem}[forward equation] \label{thm:forward_eq}
+For almost any $ \mathbb{X} $,
+\[ p'_{i, j}(t) + \lambda_{i} \cdot p_{i, j}(t) = \sum_{k \in \mathcal{S}} p_{i, k}(t) \cdot q_{k, j}. \]
+\end{theorem}
+
+\begin{example}
+Pure-birth process: $ \mathbb{P}[i, i + 1] = 1, \delta_{n} = 0 $.
+
+By \nameref{thm:backward_eq},
+\begin{eqnarray*}
+p'_{i, j}(t)
+  & = & \lambda_{i} \cdot \mathbb{P}[i, i + 1] \cdot p_{i + 1, j}(t) - \lambda_{i} \cdot p_{i, j}(t) \\
+  & = & \beta_{i} \cdot p_{i + 1, j}(t) - \beta_{i} \cdot p_{i, j}(t).
+\end{eqnarray*}
+\end{example}
+
+\begin{example} \label{ex:backward_birth_and_death}
+Birth and death process:
+\begin{eqnarray*}
+\mathbb{P}[i, i + 1] & = & \frac{\beta_{i}}{\beta_{i} + \delta_{i}} \\
+\mathbb{P}[i, i - 1] & = & \frac{\delta_{i}}{\beta_{i} + \delta_{i}} \\
+\mathbb{P}[i, i] & = & 1.
+\end{eqnarray*}
+
+By \nameref{thm:backward_eq}, if $ i = 0 $,
+\[ p'_{0, j} = \beta_{0} \cdot p_{1, j}(t) - \beta_{0} \cdot p_{0, j}(t). \]
+If $ i > 0 $,
+\begin{eqnarray*}
+p'_{i, j}
+  & = & (\beta_{i} + \delta_{i}) \left( \frac{\beta_{i}}{\beta_{i} + \delta_{i}} \cdot p_{i + 1, j}(t) + \frac{\delta_{i}}{\beta_{i} + \delta_{i}} \cdot p_{i - 1, j}(t) - p_{i, j}(t) \right) \\
+  & = & \beta_{i} \cdot p_{i + 1, j}(t) + \delta_{i} \cdot p_{i - 1, j}(t) - (\beta_{i} + \delta_{i}) \cdot p_{i, j}(t).
+\end{eqnarray*}
+\end{example}
+
+\begin{question}
+$ \mathbb{X} $ is a birth and death process with 2 states, and $ \beta_{0} = \beta, \delta_{1} = \delta, \beta_{1} = \delta_{0} = 0 $. $ p_{0, 0} $ = ? $ p_{1, 0} $ = ?
+
+According to \autoref{ex:backward_birth_and_death},
+\begin{eqnarray*}
+p'_{0, 0}(t) & = & \beta (p_{1, 0}(t) - p_{0, 0}(t)), \\
+p'_{1, 0}(t) & = & \delta (p_{0, 0}(t) - p_{1, 0}(t)).
+\end{eqnarray*}
+
+Thus,
+\begin{eqnarray*}
+p_{0, 0}(t) & = & \frac{\beta}{\beta + \delta} \cdot e^{-(\beta + \delta)t} + \frac{\delta}{\beta + \delta}, \\
+p_{1, 0}(t) & = & \frac{\delta}{\beta + \delta} - \frac{\delta}{\beta + \delta} \cdot e^{-(\beta + \delta)t}.
+\end{eqnarray*}
+\end{question}
