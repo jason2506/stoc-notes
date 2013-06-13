@@ -29,3 +29,97 @@ There are $ s $ servers. Jobs arrive at Poisson process with rate $ \lambda $, a
 
 Let $ X(t) $ be the number of jobs in the system (including those in queue) at time $ t $, then $ \mathbb{X} $ is a birth and death process with $ \beta_{n} = \lambda $ and $ \delta_{n} = \mu \cdot \min \{n, s\} $.
 \end{example}
+
+\begin{question}
+Linear growth model with immigration. $ \beta_{n} = \beta \cdot n + \delta $, $ \delta_{n} = \delta \cdot n $. $ E[X(t)] $ = ?
+\begin{alignat*}{3}
+  & \forall (n \ge 0). P(X(t + h) = n + 1 \mid X(t) = n)
+    & \quad=\quad & (\beta \cdot n + \theta) \cdot h + o(h), \\
+  & \forall (n \ge 1). P(X(t + h) = n - 1 \mid X(t) = n)
+    & \quad=\quad & \delta \cdot n \cdot h + o(h), \\
+  & \forall (n \ge 0). P(X(t + h) = n \mid X(t) = n)
+    & \quad=\quad & 1 - (\beta \cdot n + \delta \cdot n + \theta) \cdot h + o(h), \\
+  & \text{all others are $ o(h) $.} \\
+\Rightarrow\quad
+  & P(X(t + h) = X(t) + 1)
+    & \quad=\quad & (\beta \cdot X(t) + \theta) \cdot h + o(h), \\
+  & P(X(t + h) = X(t) - 1)
+    & \quad=\quad & \delta \cdot X(t) \cdot h + o(h), \\
+  & P(X(t + h) = X(t))
+    & \quad=\quad & 1 - (\beta \cdot X(t) + \delta \cdot X(t) + \theta) \cdot h + o(h), \\
+  & P(|X(t + h) = X(t)| > 1)
+    & \quad=\quad & o(h). \\
+\Rightarrow\quad
+  & E[X(t + h) \mid X(t)]
+    & \quad=\quad & (X(t) + 1) \cdot [(\beta \cdot X(t) + \theta) \cdot h + o(h)] \\
+  & & & + (X(t) + 1) \cdot (\delta \cdot X(t) \cdot h + o(h)) \\
+  & & & + X(t) \cdot [1 - (\beta \cdot X(t) + \delta \cdot X(t) + \theta) \cdot h + o(h)] \\
+  & & \quad=\quad & X(t) + [(\beta - \delta) \cdot X(t) + \theta] \cdot h + o(h). \\
+\Rightarrow\quad
+  & E[X(t + h)]
+    & \quad=\quad & [1 + (\beta - \delta) \cdot h] \cdot E[X(t)] + \theta \cdot h + o(h). \\
+\Rightarrow\quad
+  & \frac{E[X(t + h)] - E[X(t)]}{h}
+    & \quad=\quad & (\beta - \delta) \cdot E[X(t)] + \theta + \frac{o(h)}{h}. \\
+\Rightarrow\quad
+  & \frac{\mathrm{d}}{\mathrm{d}t} E[X(t)]
+    & \quad=\quad & (\beta - \delta) \cdot E[X(t)] + \theta. \\
+\end{alignat*}
+
+Thus,
+\begin{itemize}
+\item If $ \beta = \delta $, then $ \frac{\mathrm{d}}{\mathrm{d}t} E[X(t)] = \theta $.
+
+\item If $ \beta \neq \delta $, then
+\[ E[X(t)] = X(0) \cdot e^{(\beta - \delta)t} + \frac{\theta}{(\beta - \delta)} \cdot (e^{(\beta - \delta)t} - 1). \]
+\end{itemize}
+
+\begin{comment}
+If $ \beta < \delta $,
+\[ \lim_{t \to \infty} E[X(t)] = \frac{\theta}{\delta - \beta} > 0. \]
+\end{comment}
+\end{question}
+
+\begin{definition}
+The \defterm{increment time} $ T_{i} $ for state $ i $ in a birth and death process $ \mathbb{X} $ is the time from state $ i $ to reach state $ i + 1 $. Given $ X(0) = i $,
+\[ T_{i} = \min_{t} \{ t \mid X(t) = i + 1 \}. \]
+\end{definition}
+
+\begin{question}
+$ E[T_{i}] $ = ?
+
+\begin{itemize}
+\item $ i = 0 $: $ E[T_{0}] = 1 / \beta_{0} $. \\
+  因為 $ T_{0} $ 一定是 exponential distribution with parameter $ \beta_{0} $。
+
+\item $ i > 0 $: Let
+\[ I_{i} = \begin{cases}
+1 & \text{if the first transition is an increment (birth),} \\
+0 & \text{otherwise.}
+\end{cases} \]
+and hence
+\begin{eqnarray*}
+E[T_{i} \mid I_{i} = 1] & = & \frac{1}{\beta_{i} + \delta_{i}}, \\
+E[T_{i} \mid I_{i} = 0] & = & \underbrace{\frac{1}{\beta_{i} + \delta_{i}}}_{i \to i - 1} + \underbrace{E[T_{i - 1}]}_{i - 1 \to i} + \underbrace{E[T_{i}]}_{i \to i + 1}.
+\end{eqnarray*}
+
+Therefore,
+\begin{alignat*}{3}
+  & E[T_{i} \mid I_{i}]
+    & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + (1 - I_{i}) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
+\Rightarrow\quad
+  & E[T_{i}]
+    & \quad=\quad & E[E[T_{i} \mid I_{i}]] \\
+  & & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + (1 - E[I_{i}]) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
+  & & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + \left( 1 - \frac{\delta_{i}}{\beta_{i} + \delta_{i}} \right) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
+\Rightarrow\quad
+  & E[T_{i}]
+    & \quad=\quad & \frac{\delta_{i} \cdot E[T_{i - 1}]}{\beta_{i}}.
+\end{alignat*}
+\end{itemize}
+\end{question}
+
+\begin{example}
+Constant-rate process: $ \beta_{n} = \beta $ and $ \delta_{n} = \delta $ for all $ n $.
+\[ E[T_{i}] = \frac{1}{\beta_{0}} \cdot \sum_{j = 0}^{n} \left( \frac{\delta}{\beta} \right)^{i}. \]
+\end{example}
