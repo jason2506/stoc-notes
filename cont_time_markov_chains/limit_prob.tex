@@ -78,6 +78,7 @@ From \autoref{ex:barber_shop},
 \begin{example}
 Birth and death process:
 
+\begin{multicols}{2}
 \begin{tabular}{|c|c|c|} \hline
   state $ i $ & leaving $ i $ & entering $ i $ \\ \hline
   $ 0 $ & $ \beta_{0} \cdot \pi_{0} $ & $ \delta_{1} \cdot \pi_{1} $ \\ \hline
@@ -87,8 +88,10 @@ Birth and death process:
   $ n $ & $ (\beta_{n} + \delta_{n}) \cdot \pi_{n} $ & $ \beta_{n - 1} \cdot \pi_{n - 1} + \delta_{n + 1} \cdot \pi_{n + 1} $ \\ \hline
   $ \vdots $ & $ \vdots $ & $ \vdots $ \\ \hline
 \end{tabular}
+
 \begin{eqnarray*}
 \pi_{0} & = & \left( 1 + \sum_{k = 1}^{\infty} \prod_{i = 0}^{k - 1} \frac{\beta_{i}}{\delta_{i + 1}} \right)^{-1}, \\
 \pi_{n} & = & \prod_{i = 0}^{n - 1} \frac{\beta_{i}}{\delta_{i + 1}} \cdot \pi_{0}.
 \end{eqnarray*}
+\end{multicols}
 \end{example}

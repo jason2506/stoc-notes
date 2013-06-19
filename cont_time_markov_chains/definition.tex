@@ -5,14 +5,14 @@ The collection $ \mathbb{X} = \{ X(t) \mid t \ge 0 \} $ of non-negative integral
 \[ P(X(s + t) = j \mid X(s) = i \wedge \forall(0 \le r < s) .X(r) = x(r)) = P(X(s + t) = j \mid X(s) = i) \]
 holds for any $ s $, $ t $, $ i $, $ j $, and non-negative integral function $ x(\cdot) $.
 \begin{comment}
-Non-homogeneous Poisson process with intensity function $ \lambda(\cdot) $ is a continuous-time Markov chain given $ \mathbb{N}(s) = n $, the number of events in time $ [s, s + t] $ is a Poisson distribution with parameter
+Non-homogeneous Poisson process with intensity function $ \lambda(\cdot) $ is a continuous-time Markov chain given $ N(s) = n $, the number of events in time $ [s, s + t] $ is a Poisson distribution with parameter
 \[ \int_{s}^{s + t} \lambda(x) \mathrm{d}x, \]
-having nothing to do with $ N(s - \epsilon) $ for all $ \epsilon \le 0 $.
+having nothing to do with $ N(s - \epsilon) $ for all $ \epsilon \ge 0 $.
 \end{comment}
 \end{definition}
 
 \begin{definition}
-If the condition probability $ P(X(s + t) = j \mid X(s) = i) $ is independent of $ s $ for all states $ i $ and $ j $, then the continuous-time Markov chain is said to have \defterm{homogeneous transition} probabilities. (我們只會討論這一類。)
+If the conditional probability $ P(X(s + t) = j \mid X(s) = i) $ is independent of $ s $ for all states $ i $ and $ j $, then the continuous-time Markov chain is said to have \defterm{homogeneous transition} probabilities. (我們只會討論這一類。)
 \end{definition}
 
 \begin{example}
@@ -22,7 +22,7 @@ Homogeneous Poisson process 就是一個 continuous-time Markov chain with homog
 \begin{observation}
 The time for $ \mathbb{X} $ to stay in state $ i $ is an exponential distribution.
 \begin{proof}
-Suppose that $ X(r) = i $ for some $ r \le 0 $.
+Suppose that $ X(r) = i $ for some $ r \ge 0 $.
 Let $ T_{i} $ be the waiting time of transitioning to a different state. Then,
 \begin{eqnarray*}
 P(T_{i} \ge s + t \mid T_{i} \ge s)
@@ -33,7 +33,18 @@ P(T_{i} \ge s + t \mid T_{i} \ge s)
 \end{eqnarray*}
 \end{proof}
 \begin{comment}
-我們稱這個 exponential distribution 的參數為 $ \lambda_{i} $.
+\begin{alignat*}{3}
+  & P(T_{i} \ge t)
+    & \quad=\quad & P(T_{i} \ge s + t \mid T_{i} \ge s) \\
+  & & \quad=\quad & \frac{P(T_{i} \ge s + t, T_{i} \ge s)}{P(T_{i} \ge s)} \\
+  & & \quad=\quad & \frac{P(T_{i} \ge s + t)}{P(T_{i} \ge s)}, \\
+\Rightarrow\quad
+  & P(T_{i} \ge s + t)
+    & \quad=\quad & P(T_{i} \ge s) \cdot P(T_{i} \ge t).
+\end{alignat*}
+It is satisfied when $ X $ is exponentially distributed (for $ e^{-\lambda_{i}(s + t)} = e^{-\lambda_{i} s} \cdot e^{-\lambda_{i} t} $).
+
+我們稱這個 exponential distribution 的參數為 $ \lambda_{i} $。
 \end{comment}
 \end{observation}
 
@@ -44,7 +55,7 @@ Let $ \mathbb{T} $ be the waiting time of the first transition from state $ i $ 
 \begin{eqnarray*}
 \mathbb{P}[i, j]
   & = & P(X(T_{i} + s) = j \mid X(s) = i) \\
-  & = & P(X(T_{i} = j \mid X(0) = i)).
+  & = & P(X(T_{i}) = j \mid X(0) = i).
 \end{eqnarray*}
 
 Therefore, $ \mathbb{X} $ can be completely characteried by

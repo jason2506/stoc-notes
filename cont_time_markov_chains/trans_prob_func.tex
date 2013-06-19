@@ -6,7 +6,7 @@ For states $ i $ and $ j $, the \defterm{transition probability function} from $
 \end{definition}
 
 \begin{lemma}
-If $ \mathbb{X} $ is a pure-birth process ($ \forall n \in \mathcal{S}. \delta_{0} = 0 $),
+If $ \mathbb{X} $ is a pure-birth process ($ \forall n \in \mathcal{S}. \delta_{n} = 0 $),
 \[ p_{i, j}(t) = \begin{cases}
 e^{-\beta_{i}t}               & \text{if } i = j, \\
 Q_{i, j}(t) - Q_{i, j - 1}(t) & \text{if } i < j.
@@ -51,7 +51,7 @@ p_{1, j}(t)
 可知 $ p_{1, j}(t) $ 為 geometric distribution with parameter $ p = e^{-\beta t} $，且 $ p_{i, j}(t) $ 為 negative binomial distribution with param $ (i, p) $，因為 $ i $ 個 geometric 相加為 negative binomial。
 
 That is,
-\[ p_{i, j}(t) = {{j - 1}\choose{i - 1}} \cdot e^{-\beta_{i}t}(1 - e^{-\beta_{i}t})^{i - 1}. \]
+\[ p_{i, j}(t) = {{j - 1}\choose{i - 1}} \cdot e^{-\beta_{i}t}(1 - e^{-\beta_{i}t})^{j - i}. \]
 \end{example}
 
 \begin{definition}

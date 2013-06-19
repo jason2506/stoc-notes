@@ -6,7 +6,7 @@ Suppose that there are $ n $ people in the system, then the time $ B_{n} $ for a
 Thus, the birth and death process is a continuous-time Markov chain with states $ \mathcal{S} = \{ 0, 1, \cdots \} $ for which transitions from state $ n $ may go only to either state $ n - 1 $ or $ n + 1 $, and
 \begin{eqnarray*}
 \forall(i \ge 2). \mathbb{P}[n, n \pm i] & = & 0, \\
-\forall(n \le 1). \mathbb{P}[n, n - 1]
+\forall(n \ge 1). \mathbb{P}[n, n - 1]
     & = & P(B_{n} > D_{n}) \\
     & = & \int_{0}^{\infty} P(B_{n} > t) \cdot P(D_{n} = t) \mathrm{d}t \\
     & = & \int_{0}^{\infty} e^{-\beta_{n}t} \cdot \delta_{n} \cdot e^{\delta_{n}t} \mathrm{d}t \\
@@ -17,11 +17,11 @@ Thus, the birth and death process is a continuous-time Markov chain with states 
 \end{definition}
 
 \begin{example}
-Poisson process with rate $ \lambda $: $ \beta_{n} = n $, $ \delta_{n} = 0 $.
+Poisson process with rate $ \lambda $: $ \beta_{n} = \lambda $, $ \delta_{n} = 0 $.
 \end{example}
 
 \begin{example}
-Yule process: birth process with linear birth. $ \beta_{n} = \lambda \cdot n $, $ \delta_{n} = 0 $.
+Yule process: birth process with linear birth rate. $ \beta_{n} = \lambda \cdot n $, $ \delta_{n} = 0 $.
 \end{example}
 
 \begin{example}
@@ -31,7 +31,7 @@ Let $ X(t) $ be the number of jobs in the system (including those in queue) at t
 \end{example}
 
 \begin{question}
-Linear growth model with immigration. $ \beta_{n} = \beta \cdot n + \delta $, $ \delta_{n} = \delta \cdot n $. $ E[X(t)] $ = ?
+Linear growth model with immigration. $ \beta_{n} = \beta \cdot n + \theta $, $ \delta_{n} = \delta \cdot n $. $ E[X(t)] $ = ?
 \begin{alignat*}{3}
   & \forall (n \ge 0). P(X(t + h) = n + 1 \mid X(t) = n)
     & \quad=\quad & (\beta \cdot n + \theta) \cdot h + o(h), \\
@@ -52,7 +52,7 @@ Linear growth model with immigration. $ \beta_{n} = \beta \cdot n + \delta $, $ 
 \Rightarrow\quad
   & E[X(t + h) \mid X(t)]
     & \quad=\quad & (X(t) + 1) \cdot [(\beta \cdot X(t) + \theta) \cdot h + o(h)] \\
-  & & & + (X(t) + 1) \cdot (\delta \cdot X(t) \cdot h + o(h)) \\
+  & & & + (X(t) - 1) \cdot (\delta \cdot X(t) \cdot h + o(h)) \\
   & & & + X(t) \cdot [1 - (\beta \cdot X(t) + \delta \cdot X(t) + \theta) \cdot h + o(h)] \\
   & & \quad=\quad & X(t) + [(\beta - \delta) \cdot X(t) + \theta] \cdot h + o(h). \\
 \Rightarrow\quad
@@ -111,15 +111,15 @@ Therefore,
   & E[T_{i}]
     & \quad=\quad & E[E[T_{i} \mid I_{i}]] \\
   & & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + (1 - E[I_{i}]) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
-  & & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + \left( 1 - \frac{\delta_{i}}{\beta_{i} + \delta_{i}} \right) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
+  & & \quad=\quad & \frac{1}{\beta_{i} + \delta_{i}} + \left( 1 - \frac{\beta_{i}}{\beta_{i} + \delta_{i}} \right) \cdot (E[T_{i - 1}] + E[T_{i}]) \\
 \Rightarrow\quad
   & E[T_{i}]
-    & \quad=\quad & \frac{\delta_{i} \cdot E[T_{i - 1}]}{\beta_{i}}.
+    & \quad=\quad & \frac{\delta_{i} \cdot E[T_{i - 1}] + 1}{\beta_{i}}.
 \end{alignat*}
 \end{itemize}
 \end{question}
 
 \begin{example}
 Constant-rate process: $ \beta_{n} = \beta $ and $ \delta_{n} = \delta $ for all $ n $.
-\[ E[T_{i}] = \frac{1}{\beta_{0}} \cdot \sum_{j = 0}^{n} \left( \frac{\delta}{\beta} \right)^{i}. \]
+\[ E[T_{i}] = \frac{1}{\beta} \cdot \sum_{j = 0}^{i} \left( \frac{\delta}{\beta} \right)^{j}. \]
 \end{example}
